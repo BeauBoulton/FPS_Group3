@@ -616,6 +616,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Health Pack
       objectReference: {fileID: 0}
+    - target: {fileID: 8944390694013600287, guid: b4a5e04c489e0034b906d45df0c66a83, type: 3}
+      propertyPath: m_TagString
+      value: Health
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
