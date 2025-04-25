@@ -22,8 +22,7 @@ public class InventoryScript : MonoBehaviour
         arrayInventory = new ItemScript[invetorySize];
     }
 
-/*
- * this was working
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Key Card")
@@ -34,7 +33,7 @@ public class InventoryScript : MonoBehaviour
 
         }
     }
-*/
+
 
     // Update is called once per frame
     void Update()
@@ -43,26 +42,19 @@ public class InventoryScript : MonoBehaviour
     }
 
 
-    /*
-     * this is broken
-     * 
-    private bool AddItem(ItemScript itemToAdd);
-   {
-    bool success = false;
-
-    for( int i =0; i <inventoryArray.Length; i++)
+    private bool AddItem(ItemScript itemToAdd)
+    {
+        bool success = false;
+        for (int i = 0; i < arrayInventory.Length; i++)
         {
-        if(inventoryArray[i] == null)
-        {
-        inventoryArray[i] = itemToAdd;
-        sucess = true;
-        break;
+            if (arrayInventory[i] == null)
+            {
+                arrayInventory[i] = itemToAdd;
+                success = true;
+                break; 
+            }
         }
-
-        }
-
-    return success;
+        return success; 
     }
-    */
 }
     
