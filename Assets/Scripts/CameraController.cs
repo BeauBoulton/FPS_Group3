@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 
 public class CameraController : MonoBehaviour
-{
+{ 
     Vector2 mouseLook;
     Vector2 smoothV;
     public float sensitivity = 5.0f;

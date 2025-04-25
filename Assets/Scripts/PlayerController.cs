@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rigidBody;
     public int speed;
-    public GameObject bullet; 
+    public GameObject bullet;
+    public Vector3 bulletSpawn;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,9 @@ public class PlayerController : MonoBehaviour
 
     public void SpawnProjectile()
     {
-        GameObject projectile = Instantiate(bullet, transform.position, bullet.transform.rotation);
+        bulletSpawn.x = transform.position.x;
+        bulletSpawn.z = transform.position.z; 
+        bulletSpawn.y = transform.position.y - 0.2f; 
+        GameObject projectile = Instantiate(bullet, bulletSpawn, transform.rotation);
     }
 }
