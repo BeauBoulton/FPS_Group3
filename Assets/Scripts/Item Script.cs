@@ -25,22 +25,24 @@ public class ItemScript : MonoBehaviour
     {
         //Health Pick Ups
             {
-            if (other.gameObject.tag == "Health")
+            if (other.gameObject.tag == "Player")
                 {
                  playerHealth = 100;
+                Destroy(gameObject);
                 }
             }
 
         //sets up double damage
-        if (other.gameObject.tag == "Damage Buff")
+        if (other.gameObject.tag == "Player")
         {
            //get the projectile damage and multiply by 2
         }
 
         //sets up invuln pick up
-        if (other.gameObject.tag == "Invulnerablility")
+        if (other.gameObject.tag == "Player")
         {
             StartCoroutine(IFrames());
+            Destroy(gameObject);
         }
 
 
