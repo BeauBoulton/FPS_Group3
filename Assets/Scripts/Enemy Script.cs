@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 /*
  * Nick Sumek
  * updated 4/24/25
  * Sets up basic enemy behavior
  */
 
-public class AIController : MonoBehaviour
-{
 
+public class EnemyScript : MonoBehaviour
+{
     public Transform Player;
-    int MoveSpeed = 4;
+    int MoveSpeed = 2;
     int MaxDist = 10;
     int MinDist = 5;
-
+    public int enemyDamage;
 
 
 
@@ -43,3 +42,4 @@ public class AIController : MonoBehaviour
         }
     }
 }
+

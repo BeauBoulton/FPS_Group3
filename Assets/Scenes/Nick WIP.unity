@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2191289327237085213, guid: 5a20e9f7a0322104686086c53b3ebdcc, type: 3}
+      propertyPath: cameraOrientation
+      value: 
+      objectReference: {fileID: 1657522207}
     - target: {fileID: 7336547597029927847, guid: 5a20e9f7a0322104686086c53b3ebdcc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -180,6 +184,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a20e9f7a0322104686086c53b3ebdcc, type: 3}
+--- !u!4 &246118191 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7336547597029927847, guid: 5a20e9f7a0322104686086c53b3ebdcc, type: 3}
+  m_PrefabInstance: {fileID: 240109482}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1032164570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -258,7 +267,7 @@ GameObject:
   - component: {fileID: 1038927959}
   m_Layer: 0
   m_Name: Health Place holder
-  m_TagString: Untagged
+  m_TagString: Health
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -296,11 +305,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc69830beb1d05468242b1aaaba7971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPack: 0
+  healthPack: 15
   hasKeyCard: 0
   movementBoost: 0
   doubleDamage: 0
-  playerHealth: 0
+  playerHealth: 15
   iFramesTime: 5
 --- !u!4 &1038927961
 Transform:
@@ -331,27 +340,14 @@ GameObject:
   - component: {fileID: 1397502974}
   - component: {fileID: 1397502973}
   - component: {fileID: 1397502972}
-  - component: {fileID: 1397502971}
+  - component: {fileID: 1397502977}
   m_Layer: 0
   m_Name: enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1397502971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1397502970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 447aaa77603b8d949aa10fcae131742b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
 --- !u!54 &1397502972
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -465,10 +461,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1397502977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397502970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07896b87cd9d74458daa1459a0f5876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 246118191}
+  enemyDamage: 15
 --- !u!4 &1583994177 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5252701343357986149, guid: b4a5e04c489e0034b906d45df0c66a83, type: 3}
   m_PrefabInstance: {fileID: 6633460305644806745}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1657522207 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1260595030392859360, guid: 0a783839e49ab554b8ff6f4ed5080f8a, type: 3}
+  m_PrefabInstance: {fileID: 1032164570}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1790998323
 GameObject:

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false;
     public int iFramesTime = 5;
     public int enemyDamage = 15;
+ 
 
     // Start is called before the first frame update
     void Start()
@@ -93,13 +95,13 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // If the object colliding is tagged as Hazard, decrease health
-        if (collision.gameObject.tag == "Hazard")
+        if (collision.gameObject.tag == "Enemy")
         {
             // Checks if the player is not invincible so that health isn't remuved during iframes
             if (!isInvincible)
             {
                 // Gets enemy damage variable from enemy and sets it to the local enemyDamage variable
-                // enemyDamage = collision.gameObject.GetComponent<EnemyController>().enemyDamage;
+                 enemyDamage = collision.gameObject.GetComponent<EnemyScript>().enemyDamage;
                 // Removes health and starts iframes
                 currentPlayerHealth -= enemyDamage;
                 StartCoroutine(IFrames());
@@ -107,6 +109,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Sets up the colliders for health and othe buff pick ups
+    /// </summary>
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Health")
+        {
+            currentPlayerHealth += other.gameObject.GetComponent<ItemScript>().playerHealth;
+        }
+
+
+    }
     /// <summary>
     /// Assigns player inputs to variables to use in the movement script
     /// </summary>

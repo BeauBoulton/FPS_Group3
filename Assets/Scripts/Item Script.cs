@@ -27,7 +27,6 @@ public class ItemScript : MonoBehaviour
             {
             if (other.gameObject.tag == "Player")
                 {
-                 playerHealth = 100;
                 Destroy(gameObject);
                 }
             }
