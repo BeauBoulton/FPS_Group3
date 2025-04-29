@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 /*
  * Nick Sumek
@@ -15,7 +16,7 @@ public class EnemyScript : MonoBehaviour
     int MaxDist = 10;
     int MinDist = 5;
     public int enemyDamage;
-
+    public int enemyHealth;
 
 
     void Start()
@@ -39,6 +40,20 @@ public class EnemyScript : MonoBehaviour
                 //Here Call any function U want Like Shoot at here or something
             }
 
+        }
+        if (enemyHealth <= 0)
+        {
+            Destroy (gameObject);
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Projectile")
+
+        {
+            enemyHealth -= other.GetComponent<ProjectileScript>().damage;
         }
     }
 }

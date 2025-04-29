@@ -10,6 +10,7 @@ TagManager:
   - Damage Buff
   - Invulnerability
   - Enemy
+  - Projectile
   layers:
   - Default
   - TransparentFX
