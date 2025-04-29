@@ -4,33 +4,84 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 
 public class CameraController : MonoBehaviour
-{ 
-    Vector2 mouseLook;
-    Vector2 smoothV;
-    public float sensitivity = 5.0f;
-    public float smoothing = 2.0f;
+{
+    // Mouse sensitivity
+    public float sensX; 
+    public float sensY;
 
-    GameObject player;
+    public Transform orientation;
+
+    // Player rotation
+    private float xRotation; 
+    private float yRotation;
+
+    // Toggle to hide/show cursor
+    private bool hideCursor;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = this.transform.parent.gameObject;
+        // Cursor is locked and invisible by default
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        hideCursor = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var mouseDirection = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        CameraInput(); 
 
-        mouseDirection = Vector2.Scale(mouseDirection, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
-        smoothV.x = Mathf.Lerp(smoothV.x, mouseDirection.x, 1f / smoothing);
-        smoothV.y = Mathf.Lerp(smoothV.y, mouseDirection.y, 1f / smoothing);
-        mouseLook += smoothV;
+        HideCursor();
+    }
 
-        mouseLook.y = Mathf.Clamp(mouseLook.y, -90f, 90f);
+    /// <summary>
+    /// Controls camera movement with mouse inputs
+    /// </summary>
+    private void CameraInput()
+    {
+        // Mouse x and y values are set to mouse axis input * sensitivity * Time.deltaTime
+        float mouseX = Input.GetAxisRaw("Mouse X") * sensX * Time.deltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY * Time.deltaTime;
 
-        transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
-        player.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, player.transform.up);
+        // Player rotation value is assigned based on mouse values 
+        yRotation += mouseX;
+        xRotation -= mouseY;
+
+        // Clamps rotation so that player can't look up or down more than 90 degrees
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        // Uses rotation values to rotate camera on x and y axes and player on Y axis
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+    }
+
+
+    /// <summary>
+    /// Pressing escape locks and hides/unlocks and shows cursor
+    /// </summary>
+    private void HideCursor()
+    {
+        // If escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // If cursor is already hidden
+            if (hideCursor == true)
+            {
+                // Unlocks and shows cursor
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                hideCursor = false;
+            }
+
+            // If cursor is visible
+            if (hideCursor == false)
+            {
+                // Locks and hides cursor
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                hideCursor = true;
+            }
+        }
     }
 }

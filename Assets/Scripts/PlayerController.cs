@@ -2,40 +2,214 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
 
 public class PlayerController : MonoBehaviour
 {
+    // Movement variables
+    public float moveSpeed;
+    public float groundDrag;
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    bool readyToJump = true; 
+
+    // To check if touching ground
+    bool grounded; 
+
+    // Orientation of orientation object and camera object
+    public Transform orientation;
+    public Transform cameraOrientation; 
+
+    // For storing movement inputs
+    private float horizontalInput; 
+    private float verticalInput;
+
+    // Direction of movement
+    private Vector3 moveDirection;
+
+    private float distanceToWallLeft; 
+    
     private Rigidbody rigidBody;
-    public int speed;
+
+    // Bullet and where to spawn bullet
     public GameObject bullet;
-    public Vector3 bulletSpawn;
+    public Transform gunPosition;
+
+    // Health variables
+    public int maxPlayerHealth = 100;
+    public int currentPlayerHealth = 100;
+    private bool isInvincible = false;
+    public int iFramesTime = 5;
+    public int enemyDamage = 15;
 
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         rigidBody = GetComponent<Rigidbody>();
+        rigidBody.freezeRotation = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        // Raycast down to find the ground
+        if (Physics.Raycast(transform.position, Vector3.down, 1.5f))
+        {
+            grounded = true;
+        }
+
+        else
+        {
+            grounded = false;
+        }
+
+        PlayerInput(); 
+
+        SpeedControl();
+
+        // Adds drag if player is touching the ground
+        if (grounded)
+        {
+            rigidBody.drag = groundDrag; 
+        }
+        else if (!grounded)
+        {
+            rigidBody.drag = 0; 
+        }
+
+        // Spawns bullet when lmb is pressed
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SpawnProjectile();
         }
-        
-        float translation = Input.GetAxis("Vertical") * 10 * Time.deltaTime;
-        float straffe = Input.GetAxis("Horizontal") * 10 * Time.deltaTime;
-
-        transform.Translate(straffe, 0, translation);
     }
 
+    private void FixedUpdate()
+    {
+        PlayerMove();
+    }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        // If the object colliding is tagged as Hazard, decrease health
+        if (collision.gameObject.tag == "Hazard")
+        {
+            // Checks if the player is not invincible so that health isn't remuved during iframes
+            if (!isInvincible)
+            {
+                // Gets enemy damage variable from enemy and sets it to the local enemyDamage variable
+                // enemyDamage = collision.gameObject.GetComponent<EnemyController>().enemyDamage;
+                // Removes health and starts iframes
+                currentPlayerHealth -= enemyDamage;
+                StartCoroutine(IFrames());
+            }
+        }
+    }
+
+    /// <summary>
+    /// Assigns player inputs to variables to use in the movement script
+    /// </summary>
+    private void PlayerInput()
+    {
+        // Gets player inputs and assigns them to variables
+        horizontalInput = Input.GetAxisRaw("Horizontal"); 
+        verticalInput = Input.GetAxisRaw("Vertical"); 
+
+        if (Input.GetKeyDown (KeyCode.Space) && readyToJump && grounded)
+        {
+            readyToJump = false;
+            Jump(); 
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
+    }
+
+    /// <summary>
+    /// Takes keyboard inputs and translates them into player movement
+    /// </summary>
+    private void PlayerMove()
+    {
+        // Direction is the orientation direction * keyboard inputs
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        // Adds force to the player in the direction they are facing
+        // On ground
+        if (grounded)
+        {
+            rigidBody.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
+
+        // In air
+        else if (!grounded)
+        {
+            rigidBody.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+    }
+
+    /// <summary>
+    /// Caps the max velocity to the speed set in inspector
+    /// </summary>
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed; 
+            rigidBody.velocity = new Vector3(limitedVel.x, rigidBody.velocity.y, limitedVel.z);
+        }
+    }
+
+    /// <summary>
+    /// Handles jumping
+    /// </summary>
+    private void Jump()
+    {
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z); 
+
+        rigidBody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    /// <summary>
+    /// Prevents player from jumping again while in air and lets them continue jumping while holding down space and on the ground
+    /// </summary>
+    private void ResetJump()
+    {
+        readyToJump = true; 
+    }
+
+    /// <summary>
+    /// Finds the distance to the nearest wall and halts movement if touching it
+    /// </summary>
+    private void DistanceToWall()
+    {
+        RaycastHit hit;
+        Ray rightRay = new Ray(transform.position, transform.right);
+        Ray leftRay = new Ray(transform.position, -transform.right);
+        Ray frontRay = new Ray(transform.position, transform.forward);
+        Ray backRay = new Ray(transform.position, -transform.forward);
+
+        if (Physics.Raycast(rightRay, out hit) && !hit.collider.isTrigger)
+        {
+            distanceToWallLeft = hit.distance; 
+        }
+    }
+
+    /// <summary>
+    /// Spawns bullet
+    /// </summary>
     public void SpawnProjectile()
     {
-        bulletSpawn.x = transform.position.x;
-        bulletSpawn.z = transform.position.z; 
-        bulletSpawn.y = transform.position.y - 0.2f; 
-        GameObject projectile = Instantiate(bullet, bulletSpawn, transform.rotation);
+        GameObject projectile = Instantiate(bullet, gunPosition.position, cameraOrientation.rotation);
+    }
+
+    // This is a coroutine, it is a timer. It makes the player invincible and invokes Blink repeating for iFramesTime number of seconds
+    IEnumerator IFrames()
+    {
+        // Set isInvincible to true so player can't take damage while coroutine is running
+        isInvincible = true;
+        // Sets a timer for iFramesTime number of seconds
+        yield return new WaitForSeconds(iFramesTime);
+        // Removes invincibility
+        isInvincible = false;
     }
 }
