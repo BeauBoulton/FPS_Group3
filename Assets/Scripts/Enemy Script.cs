@@ -1,62 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 /*
  * Nick Sumek
- * 4/22/25
- * Sets up basic values for the enemys
+ * updated 4/24/25
+ * Sets up basic enemy behavior
  */
 
-
-public class EnemyScript : MonoBehaviour
+public class AIController : MonoBehaviour
 {
 
-    //declerations
-    public int enemyHealth;
-    public int enemyMovement;
-    public bool goingLeft = true;
-    public bool goingForward = true;
+    public Transform Player;
+    int MoveSpeed = 4;
+    int MaxDist = 10;
+    int MinDist = 5;
 
 
 
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //sets up basic enemy movement
+        transform.LookAt(Player);
 
-        //moves right
-        if (goingLeft == true)
+        if (Vector3.Distance(transform.position, Player.position) >= MinDist)
         {
-            transform.position += Vector3.left * enemyMovement * Time.deltaTime;
-        }
 
-        //moves right
-        if (goingLeft == false)
-        {
-            transform.position += Vector3.right * enemyMovement * Time.deltaTime;
-        }
+            transform.position += transform.forward * MoveSpeed * Time.deltaTime;
 
-        //sets moving forward
-        if (goingForward == true)
-        {
-            transform.position += Vector3.forward * enemyHealth * Time.deltaTime;
+
+
+            if (Vector3.Distance(transform.position, Player.position) <= MaxDist)
+            {
+                //Here Call any function U want Like Shoot at here or something
+            }
 
         }
-
-        //moves backwards
-        if (goingForward == false)
-        {
-            transform.position += Vector3.back * enemyHealth * Time.deltaTime;
-
-        }
-
-
     }
 }
