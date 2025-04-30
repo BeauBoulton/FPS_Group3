@@ -17,12 +17,24 @@ public class EnemyScript : MonoBehaviour
     int MinDist = 5;
     public int enemyDamage;
     public int enemyHealth;
+    public Transform enemyGunPosition;
+    public GameObject bullet;
 
-
+    public float spawnDelay;
+    public float timeBetweenShots;
     void Start()
     {
+        InvokeRepeating("SpawnProjectile", spawnDelay, timeBetweenShots); 
+
 
     }
+
+    //spawns enemy projectile
+    public void SpawnProjectile()
+    {
+        GameObject projectile = Instantiate(bullet, enemyGunPosition.position, transform.rotation);
+    }
+
 
     void Update()
     {

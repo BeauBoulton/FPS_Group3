@@ -6,8 +6,8 @@ public class ProjectileScript : MonoBehaviour
 {
     public int damage = 1; 
     public float speed = 10;
-    Vector3 spawnPos; 
-
+    Vector3 spawnPos;
+    public bool enemyProjectile;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,11 +33,29 @@ public class ProjectileScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// sets up checks for how the projectiles are handled
+    /// based on which objects are shhooting them
+    /// </summary>
+    /// <param name="other"></param>
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "Player")
+        if (enemyProjectile == false)
         {
-            Destroy(gameObject);
+            if (other.gameObject.tag != "Player")
+            {
+                Destroy(gameObject);
+            }
         }
+
+        else if (enemyProjectile == true)
+        {
+            if (other.gameObject.tag != "Enemy")
+            {
+                Destroy(gameObject);
+            }
+        }
+
     }
 }
