@@ -11,6 +11,7 @@ TagManager:
   - Invulnerability
   - Enemy
   - Projectile
+  - Wall
   layers:
   - Default
   - TransparentFX

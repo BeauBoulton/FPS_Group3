@@ -29,7 +29,10 @@ public class PlayerController : MonoBehaviour
     // Direction of movement
     private Vector3 moveDirection;
 
+    private float distanceToWallRight; 
     private float distanceToWallLeft; 
+    private float distanceToWallFront; 
+    private float distanceToWallBack; 
     
     private Rigidbody rigidBody;
 
@@ -85,6 +88,17 @@ public class PlayerController : MonoBehaviour
         {
             SpawnProjectile();
         }
+
+        /*
+        if ((distanceToWallBack <= 0.6 && verticalInput > 0) || (distanceToWallFront <= 0.6 && verticalInput < 0))
+        {
+            verticalInput = 0;
+        }
+        if ((distanceToWallRight <= 0.6 && horizontalInput < 0) || (distanceToWallLeft <= 0.6 && horizontalInput > 0))
+        {
+            horizontalInput = 0;
+        }
+        */
     }
 
     private void FixedUpdate()
@@ -196,7 +210,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Finds the distance to the nearest wall and halts movement if touching it
     /// </summary>
-    private void DistanceToWall()
+    /*private void DistanceToWall()
     {
         RaycastHit hit;
         Ray rightRay = new Ray(transform.position, transform.right);
@@ -204,11 +218,44 @@ public class PlayerController : MonoBehaviour
         Ray frontRay = new Ray(transform.position, transform.forward);
         Ray backRay = new Ray(transform.position, -transform.forward);
 
-        if (Physics.Raycast(rightRay, out hit) && !hit.collider.isTrigger)
+        if (Physics.Raycast(rightRay, out hit) && hit.collider.tag == "Wall")
+        {
+            distanceToWallRight = hit.distance; 
+        }
+        else
+        {
+            distanceToWallRight = 3;
+        }
+        
+        if (Physics.Raycast(leftRay, out hit) && hit.collider.tag == "Wall")
         {
             distanceToWallLeft = hit.distance; 
         }
+        else
+        {
+            distanceToWallLeft = 3;
+        }
+        
+        if (Physics.Raycast(frontRay, out hit) && hit.collider.tag == "Wall")
+        {
+            distanceToWallFront = hit.distance; 
+        }
+        else
+        {
+            distanceToWallFront = 3;
+        }
+        
+        if (Physics.Raycast(backRay, out hit) && hit.collider.tag == "Wall")
+        {
+            distanceToWallBack = hit.distance; 
+        }
+        else
+        {
+            distanceToWallBack = 3;
+        }
+
     }
+    */
 
     /// <summary>
     /// Spawns bullet
