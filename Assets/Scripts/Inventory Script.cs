@@ -15,6 +15,8 @@ public class InventoryScript : MonoBehaviour
     private ItemScript[] arrayInventory;
     public int invetorySize = 6;
 
+    public int weaponSelect; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,12 +27,25 @@ public class InventoryScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Key Card")
+        if (other.gameObject.tag == "Item")
         {
             ItemScript newItem = other.gameObject.GetComponent<ItemScript>();
             if (AddItem(newItem))
-                other.gameObject.SetActive(false);
+            {
+                ItemScript lastItem = FindLastItem(); 
 
+                if (lastItem.name == "Shotgun")
+                {
+                    weaponSelect = 1; 
+                }
+                
+                other.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                print("Not enough room for " +  newItem.name);
+            }
         }
     }
 
@@ -38,7 +53,7 @@ public class InventoryScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        WeaponSwap();
     }
 
 
@@ -55,6 +70,51 @@ public class InventoryScript : MonoBehaviour
             }
         }
         return success; 
+    }
+
+    private void WeaponSwap()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            weaponSelect = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            CheckForShotgun();
+        }
+    }
+
+    private void CheckForShotgun()
+    {
+        for (int i = 0; i < arrayInventory.Length; i++)
+        {
+            if (arrayInventory[i].name == "Shotgun")
+            {
+                weaponSelect = 1;
+                break;
+            }
+        }
+    }
+
+    private ItemScript FindLastItem()
+    {
+        ItemScript lastItem = null;
+        int itemsInInventory = 0;
+        for (int i = 0; i < arrayInventory.Length; i++)
+        {
+            if (arrayInventory[i] != null)
+            {
+                itemsInInventory++;
+            }
+        }
+
+        if (itemsInInventory != 0)
+        {
+            lastItem = arrayInventory[itemsInInventory - 1];
+        }
+
+        return lastItem;
     }
 }
     

@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 4276839345646257774}
   - component: {fileID: 1419355795602992578}
   - component: {fileID: 2191289327237085213}
+  - component: {fileID: 4314572584127353938}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -91,7 +92,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8315153920576916316}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -221,11 +222,29 @@ MonoBehaviour:
   orientation: {fileID: 3318390969202662413}
   cameraOrientation: {fileID: 0}
   bullet: {fileID: 3618115103616395167, guid: e87a93f11f6a4f84993225e98d735517, type: 3}
+  shotgunBlast: {fileID: 5476725906290717281, guid: 0db1d039a5f6931439cc86cebea932d6, type: 3}
+  weaponSelect: 0
   gunPosition: {fileID: 1052704036102865236}
+  pistolCoolDown: 0.25
+  shotgunCoolDown: 0.85
   maxPlayerHealth: 100
   currentPlayerHealth: 100
   iFramesTime: 5
   enemyDamage: 15
+--- !u!114 &4314572584127353938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8315153920576916316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ca185d45a0aa84788e15a3484f3909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invetorySize: 6
+  weaponSelect: 0
 --- !u!1 &8728830692458388319
 GameObject:
   m_ObjectHideFlags: 0

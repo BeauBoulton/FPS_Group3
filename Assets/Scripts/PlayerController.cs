@@ -38,7 +38,15 @@ public class PlayerController : MonoBehaviour
 
     // Bullet and where to spawn bullet
     public GameObject bullet;
+    public GameObject shotgunBlast;
+    private GameObject bulletToUse;
+    public int weaponSelect; 
     public Transform gunPosition;
+    private bool canFire = true;
+    private float shotCoolDown;
+    public float pistolCoolDown;
+    public float shotgunCoolDown; 
+
 
     // Health variables
     public int maxPlayerHealth = 100;
@@ -83,10 +91,13 @@ public class PlayerController : MonoBehaviour
             rigidBody.drag = 0; 
         }
 
+        weaponSelect = gameObject.GetComponent<InventoryScript>().weaponSelect;
+
         // Spawns bullet when lmb is pressed
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (canFire && Input.GetKeyDown(KeyCode.Mouse0))
         {
             SpawnProjectile();
+            StartCoroutine(ShotDelay());
         }
 
         /*
@@ -262,7 +273,20 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void SpawnProjectile()
     {
-        GameObject projectile = Instantiate(bullet, gunPosition.position, cameraOrientation.rotation);
+        // Bullet to use is normal bullet by default
+        if (weaponSelect == 0)
+        {
+            bulletToUse = bullet;
+            shotCoolDown = pistolCoolDown;
+        }
+        
+        // If hasHeavyBullets form PlayerController is true, bullet to use is heavy bullet
+        if (weaponSelect == 1)
+        {
+            bulletToUse = shotgunBlast;
+            shotCoolDown = shotgunCoolDown;
+        }
+        GameObject projectile = Instantiate(bulletToUse, gunPosition.position, cameraOrientation.rotation);
     }
 
     // This is a coroutine, it is a timer. It makes the player invincible and invokes Blink repeating for iFramesTime number of seconds
@@ -274,5 +298,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(iFramesTime);
         // Removes invincibility
         isInvincible = false;
+    }
+
+    IEnumerator ShotDelay()
+    {
+        canFire = false;
+        yield return new WaitForSeconds(shotCoolDown);
+        canFire = true;
     }
 }

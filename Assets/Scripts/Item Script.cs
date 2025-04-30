@@ -16,6 +16,9 @@ public class ItemScript : MonoBehaviour
     public int doubleDamage;
     public int playerHealth;
 
+    public bool isInvuln = false;
+    public bool isHealth = false; 
+
     // Variables for iframes
     private bool isInvincible = false;
     public int iFramesTime = 5;
@@ -24,72 +27,45 @@ public class ItemScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Health Pick Ups
-            {
+        
+        if (isHealth == true)
+        {
             if (other.gameObject.tag == "Player")
-                {
+            {
                 Destroy(gameObject);
-                }
             }
+        }
 
         //sets up double damage
+        /*
         if (other.gameObject.tag == "Player")
         {
            //get the projectile damage and multiply by 2
         }
+        */
 
         //sets up invuln pick up
-        if (other.gameObject.tag == "Player")
+        if (isInvuln == true)
         {
-            StartCoroutine(IFrames());
-            Destroy(gameObject);
+            if (other.gameObject.tag == "Player")
+            {
+                StartCoroutine(IFrames());
+                Destroy(gameObject);
+            }
         }
-
-
-
-        // This is a coroutine, it is a timer. It makes the player invincible and invokes Blink repeating for iFramesTime number of seconds
-        IEnumerator IFrames()
-        {
-            // Set isInvincible to true so player can't take damage while coroutine is running
-            isInvincible = true;
-
-            // Sets a timer for iFramesTime number of seconds
-            yield return new WaitForSeconds(iFramesTime);
-
-            // Removes invincibility
-            isInvincible = false;
-
-            // Stops invoking Blink
-            CancelInvoke("Blink");
-
-        }
-
-
-
-
-
-
-
     }
 
-
-
-    
-
-
-
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
+    // This is a coroutine, it is a timer. It makes the player invincible and invokes Blink repeating for iFramesTime number of seconds
+    IEnumerator IFrames()
     {
-        
+        // Set isInvincible to true so player can't take damage while coroutine is running
+        isInvincible = true;
+
+        // Sets a timer for iFramesTime number of seconds
+        yield return new WaitForSeconds(iFramesTime);
+
+        // Removes invincibility
+        isInvincible = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
