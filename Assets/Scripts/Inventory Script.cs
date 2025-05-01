@@ -39,6 +39,11 @@ public class InventoryScript : MonoBehaviour
                     weaponSelect = 1; 
                 }
                 
+                if (lastItem.name == "Machine Gun")
+                {
+                    weaponSelect = 2; 
+                }
+                
                 other.gameObject.SetActive(false);
             }
 
@@ -81,20 +86,29 @@ public class InventoryScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            CheckForShotgun();
-        }
-    }
-
-    private void CheckForShotgun()
-    {
-        for (int i = 0; i < arrayInventory.Length; i++)
-        {
-            if (arrayInventory[i].name == "Shotgun")
+            for (int i = 0; i < arrayInventory.Length; i++)
             {
-                weaponSelect = 1;
-                break;
+                if (arrayInventory[i].name == "Shotgun")
+                {
+                    weaponSelect = 1;
+                    break;
+                }
             }
         }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            for (int i = 0; i < arrayInventory.Length; i++)
+            {
+                if (arrayInventory[i].name == "Machine Gun")
+                {
+                    weaponSelect = 2;
+                    break;
+                }
+            }
+        }
+
+
     }
 
     private ItemScript FindLastItem()

@@ -45,7 +45,8 @@ public class PlayerController : MonoBehaviour
     private bool canFire = true;
     private float shotCoolDown;
     public float pistolCoolDown;
-    public float shotgunCoolDown; 
+    public float shotgunCoolDown;
+    private bool machineGunIsFiring; 
 
 
     // Health variables
@@ -96,8 +97,30 @@ public class PlayerController : MonoBehaviour
         // Spawns bullet when lmb is pressed
         if (canFire && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            SpawnProjectile();
-            StartCoroutine(ShotDelay());
+            if (weaponSelect == 2)
+            {
+                InvokeRepeating("SpawnProjectile", 0, 0.1f);
+                machineGunIsFiring = true;
+
+
+            }
+
+            else if (weaponSelect != 2)
+            {
+                {
+                    SpawnProjectile();
+                    StartCoroutine(ShotDelay());
+                }
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            if (machineGunIsFiring)
+            {
+                CancelInvoke("SpawnProjectile");
+                machineGunIsFiring = false;
+            }
         }
 
         /*
@@ -286,6 +309,12 @@ public class PlayerController : MonoBehaviour
             bulletToUse = shotgunBlast;
             shotCoolDown = shotgunCoolDown;
         }
+        if (weaponSelect == 2)
+        {
+            bulletToUse = bullet;
+            shotCoolDown = pistolCoolDown; 
+        }
+        
         GameObject projectile = Instantiate(bulletToUse, gunPosition.position, cameraOrientation.rotation);
     }
 

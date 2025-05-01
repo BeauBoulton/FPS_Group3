@@ -37,5 +37,10 @@ public class UIManager : MonoBehaviour
         {
             weaponText.text = "Shotgun Equipped";
         }
+        
+        if (playerController.weaponSelect == 2)
+        {
+            weaponText.text = "Machine Gun Equipped";
+        }
     }
 }
