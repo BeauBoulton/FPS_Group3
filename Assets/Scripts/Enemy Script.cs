@@ -22,7 +22,7 @@ public class EnemyScript : MonoBehaviour
     public GameObject bullet;
     public NavMeshAgent agent;
     public float sightRange;
-    private GameObject playerTracking;
+    //private GameObject playerTracking;
 
 
     public float spawnDelay;
@@ -44,7 +44,7 @@ public class EnemyScript : MonoBehaviour
     void Update()
     {
         
-        transform.LookAt(Player);
+        //transform.LookAt(Player);
 
        
 
@@ -53,8 +53,8 @@ public class EnemyScript : MonoBehaviour
         {
             Destroy (gameObject);
         }
-        
 
+        /*
         //sets up enemy movement using the nav mesh
        RaycastHit hit;
         Debug.DrawRay(transform.position, transform.forward*sightRange, Color.red);
@@ -66,10 +66,10 @@ public class EnemyScript : MonoBehaviour
                 agent.SetDestination(hit.point);
             }
         }
+        */
 
-        
 
-
+        agent.SetDestination(Player.transform.position);
 
     }
 

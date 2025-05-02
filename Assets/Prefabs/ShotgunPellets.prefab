@@ -677,7 +677,7 @@ GameObject:
   - component: {fileID: 1709214496845534575}
   m_Layer: 0
   m_Name: ShotgunPellets
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
