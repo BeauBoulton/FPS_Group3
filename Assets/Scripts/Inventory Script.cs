@@ -15,7 +15,9 @@ public class InventoryScript : MonoBehaviour
     private ItemScript[] arrayInventory;
     public int invetorySize = 6;
 
-    public int weaponSelect; 
+    public int weaponSelect;
+
+   
 
     // Start is called before the first frame update
     void Start()
@@ -32,24 +34,24 @@ public class InventoryScript : MonoBehaviour
             ItemScript newItem = other.gameObject.GetComponent<ItemScript>();
             if (AddItem(newItem))
             {
-                ItemScript lastItem = FindLastItem(); 
+                ItemScript lastItem = FindLastItem();
 
                 if (lastItem.name == "Shotgun")
                 {
-                    weaponSelect = 1; 
+                    weaponSelect = 1;
                 }
-                
+
                 if (lastItem.name == "Machine Gun")
                 {
-                    weaponSelect = 2; 
+                    weaponSelect = 2;
                 }
-                
+
                 other.gameObject.SetActive(false);
             }
 
             else
             {
-                print("Not enough room for " +  newItem.name);
+                print("Not enough room for " + newItem.name);
             }
         }
     }
@@ -71,10 +73,10 @@ public class InventoryScript : MonoBehaviour
             {
                 arrayInventory[i] = itemToAdd;
                 success = true;
-                break; 
+                break;
             }
         }
-        return success; 
+        return success;
     }
 
     private void WeaponSwap()
@@ -95,7 +97,7 @@ public class InventoryScript : MonoBehaviour
                 }
             }
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             for (int i = 0; i < arrayInventory.Length; i++)
