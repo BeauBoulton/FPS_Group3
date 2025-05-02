@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 /*
  * Nick Sumek
  * updated 4/24/25
@@ -19,6 +20,10 @@ public class EnemyScript : MonoBehaviour
     public int enemyHealth;
     public Transform enemyGunPosition;
     public GameObject bullet;
+    public NavMeshAgent agent;
+    public float sightRange;
+    private GameObject playerTracking;
+
 
     public float spawnDelay;
     public float timeBetweenShots;
@@ -38,25 +43,33 @@ public class EnemyScript : MonoBehaviour
 
     void Update()
     {
+        
         transform.LookAt(Player);
 
-        if (Vector3.Distance(transform.position, Player.position) >= MinDist)
-        {
+       
 
-            transform.position += transform.forward * MoveSpeed * Time.deltaTime;
-
-
-
-            if (Vector3.Distance(transform.position, Player.position) <= MaxDist)
-            {
-                //Here Call any function U want Like Shoot at here or something
-            }
-
-        }
+        
         if (enemyHealth <= 0)
         {
             Destroy (gameObject);
         }
+        
+
+        //sets up enemy movement using the nav mesh
+       RaycastHit hit;
+        Debug.DrawRay(transform.position, transform.forward*sightRange, Color.red);
+        
+        if (Physics.Raycast( transform.position,transform.forward, out hit, sightRange))
+        {
+            if (hit.collider.tag == "Player")
+            {
+                agent.SetDestination(hit.point);
+            }
+        }
+
+        
+
+
 
     }
 
