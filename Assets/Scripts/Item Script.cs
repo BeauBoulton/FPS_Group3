@@ -13,15 +13,16 @@ public class ItemScript : MonoBehaviour
     public int healthPack;
     public bool hasKeyCard;
     public int movementBoost;
-    public int doubleDamage;
     public int playerHealth;
 
     public bool isInvuln = false;
-    public bool isHealth = false; 
+    public bool isHealth = false;
+    public bool doubleDamage =false;
 
     // Variables for iframes
     private bool isInvincible = false;
     public int iFramesTime = 5;
+    public int doubleDamageTime = 5;
 
     //sets up item pick ups
     private void OnTriggerEnter(Collider other)
@@ -36,13 +37,8 @@ public class ItemScript : MonoBehaviour
             }
         }
 
-        //sets up double damage
-        /*
-        if (other.gameObject.tag == "Player")
-        {
-           //get the projectile damage and multiply by 2
-        }
-        */
+        
+        
 
         //sets up invuln pick up
         if (isInvuln == true)
@@ -67,5 +63,20 @@ public class ItemScript : MonoBehaviour
         // Removes invincibility
         isInvincible = false;
     }
+
+    // This is a coroutine, it is a timer. It makes the player deal double damage for a time
+    IEnumerator doubleDamageTimer()
+    {
+        // Set the player damage to take the value of projectile damage and multiply by 2
+        doubleDamage = true;
+
+        // Sets a timer for doubleDamageTime number of seconds
+        yield return new WaitForSeconds(doubleDamageTime);
+
+        // Removes double damage
+        doubleDamage = false;
+    }
+
+
 
 }

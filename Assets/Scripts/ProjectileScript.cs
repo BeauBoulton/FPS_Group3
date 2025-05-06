@@ -8,10 +8,16 @@ public class ProjectileScript : MonoBehaviour
     public float speed = 10;
     Vector3 spawnPos;
     public bool enemyProjectile;
+    public bool doubleDamage = false;
     // Start is called before the first frame update
     void Start()
     {
         spawnPos = transform.position; 
+        if(doubleDamage == true)
+        {
+            damage = damage * 2;
+        }
+
     }
 
     // Update is called once per frame
