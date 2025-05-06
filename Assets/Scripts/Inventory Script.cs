@@ -12,7 +12,7 @@ using UnityEngine;
 public class InventoryScript : MonoBehaviour
 {
     //sets up arrayInventory
-    private ItemScript[] arrayInventory;
+    public ItemScript[] arrayInventory;
     public int invetorySize = 6;
 
     public int weaponSelect;

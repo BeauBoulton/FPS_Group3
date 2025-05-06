@@ -11,7 +11,6 @@ public class ItemScript : MonoBehaviour
 {
     //declares item pick ups
     public int healthPack;
-    public bool hasKeyCard;
     public int movementBoost;
     public int playerHealth;
 
