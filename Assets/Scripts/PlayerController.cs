@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
         //checks to see if the boost is active
         if(hasSpeedBoost == true)
         {
-            moveSpeed = (moveSpeed * 2);
+            moveSpeed = (moveSpeed * 1.2f);
         }
 
 
