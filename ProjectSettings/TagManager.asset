@@ -13,6 +13,9 @@ TagManager:
   - Projectile
   - Wall
   - Item
+  - Pistol UI
+  - Shotgun UI
+  - Machine Gun UI
   layers:
   - Default
   - TransparentFX

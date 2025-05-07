@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UIWeapons : MonoBehaviour
 {
+    
     private MeshRenderer[] arrayPistolMesh;
     private MeshRenderer[] arrayShotgunMesh;
     private MeshRenderer[] arrayMachineGunMesh;
@@ -11,63 +12,38 @@ public class UIWeapons : MonoBehaviour
     public int weaponSelect; 
 
     public InventoryScript inventoryScript;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        arrayPistolMesh = new MeshRenderer[2];
-        arrayShotgunMesh = new MeshRenderer[4];
-        arrayMachineGunMesh = new MeshRenderer[10];
+        
+        arrayPistolMesh = GetComponentsInChildren<MeshRenderer>();
+        arrayShotgunMesh = GetComponentsInChildren<MeshRenderer>();
+        arrayMachineGunMesh = GetComponentsInChildren<MeshRenderer>();
+        
+        foreach (MeshRenderer renderer in arrayPistolMesh)
+        {
+            renderer.enabled = true;
+        }
+
+        foreach (MeshRenderer renderer in arrayShotgunMesh)
+        {
+            renderer.enabled = false;
+        }
+
+        foreach (MeshRenderer renderer in arrayMachineGunMesh)
+            {
+                renderer.enabled = false;
+            }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        weaponSelect = inventoryScript.weaponSelect;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "Pistol UI")
-        {
-            for (int i = 0; i < arrayPistolMesh.Length; i++)
-            {
-                MeshRenderer newMesh = other.gameObject.GetComponent<MeshRenderer>();
-                AddMesh(newMesh);
-            }
-        }
-
-        if (other.gameObject.name == "Shotgun UI")
-        {
-            for (int i = 0; i < arrayShotgunMesh.Length; i++)
-            {
-                MeshRenderer newMesh = other.gameObject.GetComponent<MeshRenderer>();
-                AddMesh(newMesh);
-            }
-        }
         
-        if (other.gameObject.name == "Machine Gun UI")
-        {
-            for (int i = 0; i < arrayMachineGunMesh.Length; i++)
-            {
-                MeshRenderer newMesh = other.gameObject.GetComponent<MeshRenderer>();
-                AddMesh(newMesh);
-            }
-        }
-    }
-
-    private bool AddMesh(MeshRenderer meshToAdd)
-    {
-        bool success = false;
-        for (int i = 0; i < arrayPistolMesh.Length; i++)
-        {
-            if (arrayPistolMesh[i] == null)
-            {
-                arrayPistolMesh[i] = meshToAdd;
-                success = true;
-                break;
-            }
-        }
-        return success;
+        weaponSelect = inventoryScript.weaponSelect;
+        
     }
 }
