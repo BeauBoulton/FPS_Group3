@@ -17,7 +17,7 @@ public class ItemScript : MonoBehaviour
     public bool isInvuln = false;
     public bool isHealth = false;
     public bool doubleDamage =false;
-
+    public bool speedBoost =false;
     // Variables for iframes
     private bool isInvincible = false;
     public int iFramesTime = 5;
@@ -47,6 +47,18 @@ public class ItemScript : MonoBehaviour
                 StartCoroutine(IFrames());
                 Destroy(gameObject);
             }
+        }
+
+
+        
+        if(speedBoost == true)
+        {
+            if(other.gameObject.tag == "Player")
+                { 
+                Destroy(gameObject); 
+                }
+
+
         }
     }
 

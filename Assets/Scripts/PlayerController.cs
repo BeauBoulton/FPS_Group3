@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput; 
     private float verticalInput;
 
+    //modifies player movement
+    public int speedTimer = 5;
+    public bool hasSpeedBoost = false;
+    
     // Direction of movement
     private Vector3 moveDirection;
 
@@ -55,7 +59,7 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false;
     public int iFramesTime = 5;
     public int enemyDamage = 15;
- 
+    
 
     // Start is called before the first frame update
     void Start()
@@ -123,6 +127,17 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
+        //checks to see if the boost is active
+        if(hasSpeedBoost == true)
+        {
+            moveSpeed = (moveSpeed * 2);
+        }
+
+
+
+
+
         /*
         if ((distanceToWallBack <= 0.6 && verticalInput > 0) || (distanceToWallFront <= 0.6 && verticalInput < 0))
         {
@@ -169,6 +184,10 @@ public class PlayerController : MonoBehaviour
             currentPlayerHealth += other.gameObject.GetComponent<ItemScript>().playerHealth;
         }
 
+        if(other.gameObject.tag == "Move")
+        {
+            StartCoroutine(speedBoostTimer());
+        }
 
     }
     /// <summary>
@@ -335,4 +354,30 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(shotCoolDown);
         canFire = true;
     }
+
+    /// <summary>
+    /// Sets up the speed boost function/ timer
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator speedBoostTimer()
+    {
+        // Set the player damage to take the value of projectile damage and multiply by 2
+        hasSpeedBoost = true;
+
+        // Sets a timer for doubleDamageTime number of seconds
+        yield return new WaitForSeconds(speedTimer);
+
+        // Removes double damage
+        hasSpeedBoost = false;
+    }
+
+
+
+
+
+
+
+
+
+
 }
