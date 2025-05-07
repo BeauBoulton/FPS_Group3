@@ -4,7 +4,11 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
-
+/*
+ * Name: Beau Boulton, Nick Sumek
+ * Last updated: 5/6/25
+ * Description: Handles player movement and shooting
+ */
 public class PlayerController : MonoBehaviour
 {
     // Movement variables
@@ -101,6 +105,7 @@ public class PlayerController : MonoBehaviour
         // Spawns bullet when lmb is pressed
         if (canFire && Input.GetKeyDown(KeyCode.Mouse0))
         {
+            // Check if machine gun is equipped and invoke repeating the spawn projectile, else spawn it normally
             if (weaponSelect == 2)
             {
                 InvokeRepeating("SpawnProjectile", 0, 0.1f);
@@ -118,7 +123,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        // If mouse is release or if a different weapon is selected, cancel the machine gun fire
+        if (Input.GetKeyUp(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
         {
             if (machineGunIsFiring)
             {
@@ -174,22 +180,25 @@ public class PlayerController : MonoBehaviour
 
 
     /// <summary>
-    /// Sets up the colliders for health and othe buff pick ups
+    /// Sets up the colliders for health and other buff pick ups
     /// </summary>
 
     private void OnTriggerEnter(Collider other)
     {
+        // If item is health, get the health amount from the item
         if(other.gameObject.tag == "Health")
         {
             currentPlayerHealth += other.gameObject.GetComponent<ItemScript>().playerHealth;
         }
 
+        // If item is speed boost, start speed boost coroutine
         if(other.gameObject.tag == "Move")
         {
             StartCoroutine(speedBoostTimer());
         }
 
     }
+
     /// <summary>
     /// Assigns player inputs to variables to use in the movement script
     /// </summary>
@@ -199,6 +208,7 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal"); 
         verticalInput = Input.GetAxisRaw("Vertical"); 
 
+        // Jump when space is pressed
         if (Input.GetKeyDown (KeyCode.Space) && readyToJump && grounded)
         {
             readyToJump = false;
@@ -234,7 +244,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void SpeedControl()
     {
+       // Saves the current velocity in a new variable
         Vector3 flatVel = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+        
+        // If the velocity is higher than move speed, sets the current velocity to the move speed
         if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed; 
@@ -322,18 +335,21 @@ public class PlayerController : MonoBehaviour
             shotCoolDown = pistolCoolDown;
         }
         
-        // If hasHeavyBullets form PlayerController is true, bullet to use is heavy bullet
+        // If weaponSelect is 1 (shotgun), use shotgun pellets and shotgun cool down
         if (weaponSelect == 1)
         {
             bulletToUse = shotgunBlast;
             shotCoolDown = shotgunCoolDown;
         }
+        
+        // Weapon selct 2 (machine gun) uses the same as pistol settings
         if (weaponSelect == 2)
         {
             bulletToUse = bullet;
             shotCoolDown = pistolCoolDown; 
         }
         
+        // Spawn chosen projectile at gun position facing the same direction the camera is facing
         GameObject projectile = Instantiate(bulletToUse, gunPosition.position, cameraOrientation.rotation);
     }
 
@@ -348,6 +364,7 @@ public class PlayerController : MonoBehaviour
         isInvincible = false;
     }
 
+    // This coruoutine is a timer that sets a delay in between shotgun and pistol shots
     IEnumerator ShotDelay()
     {
         canFire = false;

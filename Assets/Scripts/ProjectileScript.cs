@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/*
+ * Name: Beau Boulton, Nick Sumek
+ * Last updated: 5/6/25
+ * Description: handles movement and damage of projectile
+ */
 
 public class ProjectileScript : MonoBehaviour
 {
@@ -9,10 +14,13 @@ public class ProjectileScript : MonoBehaviour
     Vector3 spawnPos;
     public bool enemyProjectile;
     public bool doubleDamage = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Sets spawn position at the current position when spawning
         spawnPos = transform.position; 
+
         if(doubleDamage == true)
         {
             damage = damage * 2;
@@ -23,8 +31,10 @@ public class ProjectileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Start moving foraward based on speed set in inspector
         transform.position += speed * transform.forward * Time.deltaTime;
 
+        // If projectile moves more than 20 units away from spawn position in any direction it despawns
         if (transform.position.x > (spawnPos.x + 20) || transform.position.x < (spawnPos.x - 20))
         {
             Destroy(gameObject);
@@ -39,14 +49,10 @@ public class ProjectileScript : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// sets up checks for how the projectiles are handled
-    /// based on which objects are shhooting them
-    /// </summary>
-    /// <param name="other"></param>
-
     private void OnTriggerEnter(Collider other)
     {
+        // If it is set as an enemy projectile, it doesn't destroy itself on contacting an enemy, and vice versa
+        // this is so the projectile doesn't destroy itself on spawning
         if (enemyProjectile == false)
         {
             if (other.gameObject.tag != "Player")

@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+/*
+ * Name: Beau Boulton
+ * Last updated: 4/29/25
+ * Description: Handles camera movement with player mouse inputs
+ */
 
 public class CameraController : MonoBehaviour
 {
