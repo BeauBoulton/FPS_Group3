@@ -119,8 +119,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPack: 0
-  hasKeyCard: 0
-  movementBoost: 0
-  doubleDamage: 0
+  speedMultiplier: 0
   playerHealth: 0
+  isInvuln: 0
+  isHealth: 0
+  doubleDamage: 1
+  speedBoost: 0
   iFramesTime: 5
+  doubleDamageTime: 5
