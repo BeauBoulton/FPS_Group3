@@ -11,7 +11,7 @@ public class ItemScript : MonoBehaviour
 {
     //declares item pick ups
     public int healthPack;
-    public int movementBoost;
+    public float speedMultiplier;
     public int playerHealth;
 
     public bool isInvuln = false;

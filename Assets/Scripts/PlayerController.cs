@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour
 
     //modifies player movement
     public int speedTimer = 5;
-    public bool hasSpeedBoost = false;
+    public float normalSpeed;
+    public float speedMultiplier;
     
     // Direction of movement
     private Vector3 moveDirection;
@@ -135,10 +136,12 @@ public class PlayerController : MonoBehaviour
 
 
         //checks to see if the boost is active
+        /*
         if(hasSpeedBoost == true)
         {
             moveSpeed = (moveSpeed * 1.2f);
         }
+        */
 
 
 
@@ -194,6 +197,7 @@ public class PlayerController : MonoBehaviour
         // If item is speed boost, start speed boost coroutine
         if(other.gameObject.tag == "Move")
         {
+            speedMultiplier = other.GetComponent<ItemScript>().speedMultiplier; 
             StartCoroutine(speedBoostTimer());
         }
 
@@ -379,13 +383,15 @@ public class PlayerController : MonoBehaviour
     IEnumerator speedBoostTimer()
     {
         // Set the player damage to take the value of projectile damage and multiply by 2
-        hasSpeedBoost = true;
+        normalSpeed = moveSpeed;
+
+        moveSpeed = moveSpeed * speedMultiplier;
 
         // Sets a timer for doubleDamageTime number of seconds
         yield return new WaitForSeconds(speedTimer);
 
-        // Removes double damage
-        hasSpeedBoost = false;
+        // Removes speed boost
+        moveSpeed = normalSpeed; 
     }
 
 
