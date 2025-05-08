@@ -15,17 +15,29 @@ public class ProjectileScript : MonoBehaviour
     public bool enemyProjectile;
     public bool doubleDamage = false;
 
+    public PlayerController playerController; 
+
+    public EnemyScript enemyScript; 
+
     // Start is called before the first frame update
     void Start()
     {
         // Sets spawn position at the current position when spawning
-        spawnPos = transform.position; 
+        spawnPos = transform.position;
 
-        if(doubleDamage == true)
+        //doubleDamage = playerController.GetComponent<PlayerController>().doubleDamage;
+
+        if (doubleDamage == true)
         {
             damage = damage * 2;
         }
 
+        if (enemyProjectile == true)
+        {
+            damage = enemyScript.GetComponent<EnemyScript>().enemyDamage; 
+        }
+
+ 
     }
 
     // Update is called once per frame

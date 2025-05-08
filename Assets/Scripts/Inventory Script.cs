@@ -133,8 +133,6 @@ public class InventoryScript : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     /// <summary>
