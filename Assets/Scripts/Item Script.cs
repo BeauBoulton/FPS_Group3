@@ -21,7 +21,7 @@ public class ItemScript : MonoBehaviour
     // Variables for iframes
     private bool isInvincible = false;
     public int iFramesTime = 5;
-    public int doubleDamageTime = 5;
+   
 
     //sets up item pick ups
     private void OnTriggerEnter(Collider other)
@@ -60,6 +60,15 @@ public class ItemScript : MonoBehaviour
 
 
         }
+        if (doubleDamage == true)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                Destroy(gameObject);
+            }
+
+
+        }
     }
 
     // This is a coroutine, it is a timer. It makes the player invincible and invokes Blink repeating for iFramesTime number of seconds
@@ -76,17 +85,7 @@ public class ItemScript : MonoBehaviour
     }
 
     // This is a coroutine, it is a timer. It makes the player deal double damage for a time
-    IEnumerator doubleDamageTimer()
-    {
-        // Set the player damage to take the value of projectile damage and multiply by 2
-        doubleDamage = true;
-
-        // Sets a timer for doubleDamageTime number of seconds
-        yield return new WaitForSeconds(doubleDamageTime);
-
-        // Removes double damage
-        doubleDamage = false;
-    }
+    
 
 
 

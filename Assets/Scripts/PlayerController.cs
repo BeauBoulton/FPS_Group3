@@ -55,8 +55,13 @@ public class PlayerController : MonoBehaviour
     private float shotCoolDown;
     public float pistolCoolDown;
     public float shotgunCoolDown;
-    private bool machineGunIsFiring; 
+    private bool machineGunIsFiring;
 
+
+    //damage modifiers
+    public int doubleDamageTime = 5;
+    public bool doubleDamage = false;
+   
 
     // Health variables
     public int maxPlayerHealth = 100;
@@ -396,8 +401,19 @@ public class PlayerController : MonoBehaviour
 
 
 
+    //sets up double damage timer
+    IEnumerator doubleDamageTimer()
+    {
+        // Set the player damage to take the value of projectile damage and multiply by 2
+        doubleDamage = true;
 
 
+        // Sets a timer for doubleDamageTime number of seconds
+        yield return new WaitForSeconds(doubleDamageTime);
+
+        
+       doubleDamage = false;
+    }
 
 
 
