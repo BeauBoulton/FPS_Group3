@@ -16,6 +16,7 @@ TagManager:
   - Pistol UI
   - Shotgun UI
   - Machine Gun UI
+  - Enemy Projectile
   layers:
   - Default
   - TransparentFX
