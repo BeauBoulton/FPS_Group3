@@ -215,22 +215,20 @@ public class PlayerController : MonoBehaviour
 
 
         //checks to see if the player is shot
-        if (other.gameObject.tag == "Projectile")
+        if (other.gameObject.tag == "Enemy Projectile")
         {
-            if (other.gameObject.GetComponent<ProjectileScript>().enemyProjectile == true)
-            {
-
+            
                 // Checks if the player is not invincible so that health isn't remuved during iframes
                 if (!isInvincible)
                 {
                     // Gets enemy damage variable from enemy and sets it to the local enemy damage variable
-                    enemyDamage = other.gameObject.GetComponent<ProjectileScript>().damage;
+                    enemyDamage = other.gameObject.GetComponent<EnemyProjectile>().damage;
                     // Removes health and starts iframes
                     currentPlayerHealth -= enemyDamage;
                     StartCoroutine(IFrames());
 
                 }
-            }
+            
         }
 
     }
