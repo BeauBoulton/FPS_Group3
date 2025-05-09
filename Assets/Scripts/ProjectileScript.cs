@@ -24,8 +24,7 @@ public class ProjectileScript : MonoBehaviour
         // Sets spawn position at the current position when spawning
         spawnPos = transform.position;
 
-        //doubleDamage = playerController.GetComponent<PlayerController>().doubleDamage;
-
+        doubleDamage = playerController.GetComponent<PlayerController>().doubleDamage;
         if (doubleDamage == true)
         {
             damage = damage * 2;

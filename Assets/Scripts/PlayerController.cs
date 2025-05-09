@@ -213,6 +213,11 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(speedBoostTimer());
         }
 
+        if(other.gameObject.tag == "Damage Buff")
+        {
+            StartCoroutine(doubleDamageTimer()); 
+        }
+
 
         //checks to see if the player is shot
         if (other.gameObject.tag == "Enemy Projectile")
