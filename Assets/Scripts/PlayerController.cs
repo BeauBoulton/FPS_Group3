@@ -390,6 +390,7 @@ public class PlayerController : MonoBehaviour
         
         // Spawn chosen projectile at gun position facing the same direction the camera is facing
         GameObject projectile = Instantiate(bulletToUse, gunPosition.position, cameraOrientation.rotation);
+        projectile.GetComponent<ProjectileScript>().playerController = this;
     }
 
     // This is a coroutine, it is a timer. It makes the player invincible and invokes Blink repeating for iFramesTime number of seconds
@@ -436,7 +437,7 @@ public class PlayerController : MonoBehaviour
     {
         // Set the player damage to take the value of projectile damage and multiply by 2
         doubleDamage = true;
-
+        print("double damage in coroutine");
 
         // Sets a timer for doubleDamageTime number of seconds
         yield return new WaitForSeconds(doubleDamageTime);

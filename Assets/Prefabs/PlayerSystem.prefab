@@ -2818,13 +2818,16 @@ MonoBehaviour:
   orientation: {fileID: 4053121735199930804}
   cameraOrientation: {fileID: 5611543044077814151}
   speedTimer: 5
-  hasSpeedBoost: 0
+  normalSpeed: 0
+  speedMultiplier: 0
   bullet: {fileID: 3618115103616395167, guid: e87a93f11f6a4f84993225e98d735517, type: 3}
   shotgunBlast: {fileID: 5476725906290717281, guid: 0db1d039a5f6931439cc86cebea932d6, type: 3}
   weaponSelect: 0
   gunPosition: {fileID: 444886995240798249}
   pistolCoolDown: 0.25
   shotgunCoolDown: 0.85
+  doubleDamageTime: 5
+  doubleDamage: 0
   maxPlayerHealth: 100
   currentPlayerHealth: 100
   iFramesTime: 5

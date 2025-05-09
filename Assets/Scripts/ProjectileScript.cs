@@ -12,8 +12,9 @@ public class ProjectileScript : MonoBehaviour
     public int damage = 1; 
     public float speed = 10;
     Vector3 spawnPos;
-    public bool doubleDamage = false;
+    public bool doubleDamageBullet = false;
 
+    [HideInInspector]
     public PlayerController playerController; 
 
     
@@ -24,11 +25,14 @@ public class ProjectileScript : MonoBehaviour
         // Sets spawn position at the current position when spawning
         spawnPos = transform.position;
 
-        doubleDamage = playerController.GetComponent<PlayerController>().doubleDamage;
-        if (doubleDamage == true)
+        
+        doubleDamageBullet = playerController.GetComponent<PlayerController>().doubleDamage;
+        if (doubleDamageBullet == true)
         {
-            damage = damage * 2;
+            print("double damage");
+            damage = (damage * 2);
         }
+
     }
 
     // Update is called once per frame

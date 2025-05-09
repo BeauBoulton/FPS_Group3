@@ -120,4 +120,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   speed: 12
-  enemyProjectile: 0
+  doubleDamageBullet: 0
+  playerController: {fileID: 2191289327237085213, guid: 5a20e9f7a0322104686086c53b3ebdcc, type: 3}
