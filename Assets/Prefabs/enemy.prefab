@@ -151,7 +151,9 @@ MonoBehaviour:
   enemyDamage: 15
   enemyHealth: 5
   enemyGunPosition: {fileID: 6270355661431301401}
-  bullet: {fileID: 3618115103616395167, guid: e87a93f11f6a4f84993225e98d735517, type: 3}
+  bullet: {fileID: 4247902059538314088, guid: 6830b5787e06bc44294a64a53f12b0ee, type: 3}
+  agent: {fileID: 0}
+  sightRange: 0
   spawnDelay: 3
   timeBetweenShots: 3
 --- !u!1 &1538527921164538415
