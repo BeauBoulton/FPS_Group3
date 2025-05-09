@@ -12,12 +12,11 @@ public class ProjectileScript : MonoBehaviour
     public int damage = 1; 
     public float speed = 10;
     Vector3 spawnPos;
-    public bool enemyProjectile;
     public bool doubleDamage = false;
 
     public PlayerController playerController; 
 
-    public EnemyScript enemyScript; 
+    
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +30,6 @@ public class ProjectileScript : MonoBehaviour
         {
             damage = damage * 2;
         }
-
-        if (enemyProjectile == true)
-        {
-            damage = enemyScript.GetComponent<EnemyScript>().enemyDamage; 
-        }
-
- 
     }
 
     // Update is called once per frame
@@ -65,21 +57,13 @@ public class ProjectileScript : MonoBehaviour
     {
         // If it is set as an enemy projectile, it doesn't destroy itself on contacting an enemy, and vice versa
         // this is so the projectile doesn't destroy itself on spawning
-        if (enemyProjectile == false)
-        {
+
+        
             if (other.gameObject.tag != "Player")
             {
                 Destroy(gameObject);
             }
-        }
-
-        else if (enemyProjectile == true)
-        {
-            if (other.gameObject.tag != "Enemy")
-            {
-                Destroy(gameObject);
-            }
-        }
+        
 
     }
 }
