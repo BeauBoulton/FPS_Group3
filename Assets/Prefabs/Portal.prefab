@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2234119509414359961}
   - component: {fileID: 1768199121075079369}
   - component: {fileID: 7043363869819374794}
-  - component: {fileID: 1946697166799457707}
+  - component: {fileID: 22051412967986630}
   m_Layer: 0
   m_Name: Portal
   m_TagString: Untagged
@@ -32,7 +32,8 @@ Transform:
   m_LocalPosition: {x: 8.175711, y: 2.617638, z: 10.58474}
   m_LocalScale: {x: 3.5129, y: 5.0158, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1107871539616364995}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2234119509414359961
@@ -106,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1946697166799457707
+--- !u!114 &22051412967986630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +116,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 2926982333998749738}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0137f7042f29a243bfa4a3f16f2b90f, type: 3}
+  m_Script: {fileID: 11500000, guid: ced33e9810bce704c94ae1d8e10f8b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneIndex: 1
+  sceneIndex: 2
+  spawnPoint: {fileID: 0}
+--- !u!1 &5553843736789542963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1107871539616364995}
+  m_Layer: 0
+  m_Name: Teleport Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1107871539616364995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5553843736789542963}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 17.914623, y: -0.46652573, z: 20.52856}
+  m_LocalScale: {x: 1, y: 0.19936998, z: 0.284665}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2439605673652499631}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

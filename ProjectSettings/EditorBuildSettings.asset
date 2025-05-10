@@ -5,12 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Beau WIP.unity
-    guid: 384587fcf10db1e4a8ab90ba48886eed
-  - enabled: 0
-    path: Assets/Scenes/DontDestroyTest.unity
-    guid: 3a518a9823423f04bab1ce28355d65a8
   - enabled: 1
     path: Assets/Scenes/Start Menue.unity
     guid: 0b241410c4cbc634c8835dfb88184a1f
