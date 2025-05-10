@@ -131,9 +131,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &3240066339634389462
 MonoBehaviour:
@@ -147,7 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07896b87cd9d74458daa1459a0f5876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  player: {fileID: 0}
+  playerPos: {fileID: 0}
   enemyDamage: 15
   enemyHealth: 5
   enemyGunPosition: {fileID: 6270355661431301401}

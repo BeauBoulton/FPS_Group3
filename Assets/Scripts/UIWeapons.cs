@@ -1,36 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 /*
  * Name: Beau Boulton
  * Last updated: 5/7/25
- * Description: Handles displaying the currently equipped weaponin the HUD
+ * Description: Handles displaying the currently equipped weapon in the HUD
  */
 public class UIWeapons : MonoBehaviour
 {
-    // Arrays to hold the mesh renderers of the ui items
-    private MeshRenderer[] arrayPistolMesh;
-    private MeshRenderer[] arrayShotgunMesh;
-    private MeshRenderer[] arrayMachineGunMesh;
+    // Array to hold the mesh renderers of the ui items
+    private MeshRenderer[] arrayMesh;
 
-    public int weaponSelect; 
+    public int weaponSelect;
+
+    //private bool isInvincible;
+    //private bool isBlinking = false; 
 
     // Reference to inventory script to get weapon select number
     public InventoryScript inventoryScript;
-    
 
+    //public PlayerController playerController;
+    
     // Start is called before the first frame update
     void Start()
     {
-        // Fills arrays with the mesh renderers of the wepons in the hud
-        arrayPistolMesh = GetComponentsInChildren<MeshRenderer>();
-        arrayShotgunMesh = GetComponentsInChildren<MeshRenderer>();
-        arrayMachineGunMesh = GetComponentsInChildren<MeshRenderer>();
+        // Fills array with the mesh renderers of the wepons in the hud
+        arrayMesh = GetComponentsInChildren<MeshRenderer>();
 
         // Disables all mesh renderers by default
         if (gameObject.name == "Pistol HUD")
         {
-            foreach (MeshRenderer renderer in arrayPistolMesh)
+            foreach (MeshRenderer renderer in arrayMesh)
             {
                 renderer.enabled = false;
             }
@@ -38,7 +39,7 @@ public class UIWeapons : MonoBehaviour
 
         if (gameObject.name == "Shotgun HUD")
         {
-            foreach (MeshRenderer renderer in arrayShotgunMesh)
+            foreach (MeshRenderer renderer in arrayMesh)
             {
                 renderer.enabled = false;
             }
@@ -46,12 +47,11 @@ public class UIWeapons : MonoBehaviour
 
         if (gameObject.name == "Machine Gun HUD")
         {
-            foreach (MeshRenderer renderer in arrayMachineGunMesh)
+            foreach (MeshRenderer renderer in arrayMesh)
             {
                 renderer.enabled = false;
             }
         }
-
     }
 
     // Update is called once per frame
@@ -59,9 +59,25 @@ public class UIWeapons : MonoBehaviour
     {
         // Assigns local weapon select variable to inventory script's weapon select value
         weaponSelect = inventoryScript.weaponSelect;
-        WeaponSelector(); 
+
+        WeaponSelector();
+        
+        /*
+        isInvincible = playerController.isInvincible;
+        
+        if (isInvincible)
+        {
+            if (!isBlinking)
+            {
+                StartCoroutine(BlinkTimer());
+            }
+        }
+        */
     }
 
+    /// <summary>
+    /// Enables and disables mesh renderers based on which weapon is selected
+    /// </summary>
     private void WeaponSelector()
     {
         // If pistol is equipped
@@ -70,15 +86,17 @@ public class UIWeapons : MonoBehaviour
             // Enable pistol renderers and disable all others
             if (gameObject.name == "Pistol HUD")
             {
-                foreach (MeshRenderer renderer in arrayPistolMesh)
-                {
-                    renderer.enabled = true;
-                }
+                
+                    foreach (MeshRenderer renderer in arrayMesh)
+                    {
+                        renderer.enabled = true;
+                    }
+                
             }
             
             if (gameObject.name == "Shotgun HUD")
             {
-                foreach (MeshRenderer renderer in arrayShotgunMesh)
+                foreach (MeshRenderer renderer in arrayMesh)
                 {
                     renderer.enabled = false;
                 }
@@ -86,7 +104,7 @@ public class UIWeapons : MonoBehaviour
 
             if (gameObject.name == "Machine Gun HUD")
             {
-                foreach (MeshRenderer renderer in arrayMachineGunMesh)
+                foreach (MeshRenderer renderer in arrayMesh)
                 {
                     renderer.enabled = false;
                 }
@@ -99,7 +117,7 @@ public class UIWeapons : MonoBehaviour
             // Enable shotgun renderers and disable all others
             if (gameObject.name == "Pistol HUD")
             {
-                foreach (MeshRenderer renderer in arrayPistolMesh)
+                foreach (MeshRenderer renderer in arrayMesh)
                 {
                     renderer.enabled = false;
                 }
@@ -107,15 +125,17 @@ public class UIWeapons : MonoBehaviour
             
             if (gameObject.name == "Shotgun HUD")
             {
-                foreach (MeshRenderer renderer in arrayShotgunMesh)
-                {
-                    renderer.enabled = true;
-                }
+                
+                    foreach (MeshRenderer renderer in arrayMesh)
+                    {
+                        renderer.enabled = true;
+                    }
+                
             }
 
             if (gameObject.name == "Machine Gun HUD")
             {
-                foreach (MeshRenderer renderer in arrayMachineGunMesh)
+                foreach (MeshRenderer renderer in arrayMesh)
                 {
                     renderer.enabled = false;
                 }
@@ -128,7 +148,7 @@ public class UIWeapons : MonoBehaviour
             // Enable machine gun renderers and disable all others
             if (gameObject.name == "Pistol HUD")
             {
-                foreach (MeshRenderer renderer in arrayPistolMesh)
+                foreach (MeshRenderer renderer in arrayMesh)
                 {
                     renderer.enabled = false;
                 }
@@ -136,7 +156,7 @@ public class UIWeapons : MonoBehaviour
             
             if (gameObject.name == "Shotgun HUD")
             {
-                foreach (MeshRenderer renderer in arrayShotgunMesh)
+                foreach (MeshRenderer renderer in arrayMesh)
                 {
                     renderer.enabled = false;
                 }
@@ -144,11 +164,73 @@ public class UIWeapons : MonoBehaviour
 
             if (gameObject.name == "Machine Gun HUD")
             {
-                foreach (MeshRenderer renderer in arrayMachineGunMesh)
+                
+                    foreach (MeshRenderer renderer in arrayMesh)
+                    {
+                        renderer.enabled = true;
+                    }
+                
+            }
+        }
+    }
+
+    /*
+    private void Blink()
+    {
+        if (weaponSelect == 0)
+        {
+            if (gameObject.name == "Pistol HUD")
+            {
+                foreach (MeshRenderer renderer in arrayMesh)
                 {
+                    renderer.enabled = false;
+                    StartCoroutine(BlinkDelay());
                     renderer.enabled = true;
                 }
             }
         }
+
+        if (weaponSelect == 1)
+        {
+            if (gameObject.name == "Shotgun HUD")
+            {
+                foreach (MeshRenderer renderer in arrayMesh)
+                {
+                    renderer.enabled = false;
+                    StartCoroutine(BlinkDelay());
+                    renderer.enabled = true;
+                }
+            }
+        }
+
+        if (weaponSelect == 2)
+        {
+            if (gameObject.name == "Machine Gun HUD")
+            {
+                foreach (MeshRenderer renderer in arrayMesh)
+                {
+                    renderer.enabled = false;
+                    StartCoroutine(BlinkDelay());
+                    renderer.enabled = true;
+                }
+            }
+
+        }
     }
+    
+    IEnumerator BlinkDelay()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+
+    IEnumerator BlinkTimer()
+    {
+        isBlinking = true; 
+        InvokeRepeating("Blink", 0, 2f);
+        yield return new WaitForSeconds(playerController.iFramesTime);
+        CancelInvoke("Blink"); 
+        isBlinking = false;
+    }
+    */
+
 }

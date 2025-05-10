@@ -12,26 +12,10 @@ public class DoorScript : MonoBehaviour
     public int blueLock;
     public bool hasKeyCard = false;
     private ItemScript[] arrayInventory;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        
-
-
-
-
-    }
     //sets a check  to see if the player has the key
     private void OnCollisionEnter(Collision collision)
     {
-        
         if (collision.gameObject.GetComponent<InventoryScript>())
         {
             arrayInventory = collision.gameObject.GetComponent<InventoryScript>().arrayInventory;
@@ -44,18 +28,8 @@ public class DoorScript : MonoBehaviour
                     //gets rid of the locked door and uses the key 
                     Destroy(arrayInventory[i].gameObject);   
                     Destroy (gameObject);
-
                 }
-
-
             }
-
         }
-
     }
-
-
-
-
-
 }

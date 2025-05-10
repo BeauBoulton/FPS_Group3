@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/*
+ * Name: Nick Sumek, Beau Boulton
+ * Last updated: 5/6/25
+ * Description: Handles movement and damage for projectiles fired by enemies
+ */
 
 public class EnemyProjectile : MonoBehaviour
 {
@@ -8,6 +13,7 @@ public class EnemyProjectile : MonoBehaviour
     public float speed = 10;
     Vector3 spawnPos;
     public EnemyScript enemyScript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +46,7 @@ public class EnemyProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Bullet destroys itself if hitting anything other than an enemy
         if (other.gameObject.tag != "Enemy")
         {
             Destroy(gameObject);

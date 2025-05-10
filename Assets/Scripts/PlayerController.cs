@@ -6,8 +6,8 @@ using UnityEngine.TextCore.Text;
 using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
 /*
  * Name: Beau Boulton, Nick Sumek
- * Last updated: 5/6/25
- * Description: Handles player movement and shooting
+ * Last updated: 5/9/25
+ * Description: Handles player movement, health, and shooting
  */
 public class PlayerController : MonoBehaviour
 {
@@ -37,11 +37,6 @@ public class PlayerController : MonoBehaviour
     
     // Direction of movement
     private Vector3 moveDirection;
-
-    private float distanceToWallRight; 
-    private float distanceToWallLeft; 
-    private float distanceToWallFront; 
-    private float distanceToWallBack; 
     
     private Rigidbody rigidBody;
 
@@ -57,19 +52,19 @@ public class PlayerController : MonoBehaviour
     public float shotgunCoolDown;
     private bool machineGunIsFiring;
 
-
     //damage modifiers
     public int doubleDamageTime = 5;
     public bool doubleDamage = false;
    
-
     // Health variables
     public int maxPlayerHealth = 100;
     public int currentPlayerHealth = 100;
-    private bool isInvincible = false;
-    public int iFramesTime = 5;
+    public bool isInvincible = false;
+    public bool isInvulnPowerUp = false; 
+    public int iFramesHit;
+    public int iFramesPowerUp; 
+    public int iFramesTime;
     public int enemyDamage = 15;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -106,6 +101,7 @@ public class PlayerController : MonoBehaviour
             rigidBody.drag = 0; 
         }
 
+        // Pulls weapon select variable from inventory and sets it to local variable
         weaponSelect = gameObject.GetComponent<InventoryScript>().weaponSelect;
 
         // Spawns bullet when lmb is pressed
@@ -116,8 +112,6 @@ public class PlayerController : MonoBehaviour
             {
                 InvokeRepeating("SpawnProjectile", 0, 0.1f);
                 machineGunIsFiring = true;
-
-
             }
 
             else if (weaponSelect != 2)
@@ -129,8 +123,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // If mouse is release or if a different weapon is selected, cancel the machine gun fire
-        if (Input.GetKeyUp(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
+        // If mouse is released or if a different weapon is selected, cancel the machine gun fire
+        if (Input.GetKeyUp(KeyCode.Mouse0) || weaponSelect == 0 || weaponSelect == 1)
         {
             if (machineGunIsFiring)
             {
@@ -138,30 +132,6 @@ public class PlayerController : MonoBehaviour
                 machineGunIsFiring = false;
             }
         }
-
-
-        //checks to see if the boost is active
-        /*
-        if(hasSpeedBoost == true)
-        {
-            moveSpeed = (moveSpeed * 1.2f);
-        }
-        */
-
-
-
-
-
-        /*
-        if ((distanceToWallBack <= 0.6 && verticalInput > 0) || (distanceToWallFront <= 0.6 && verticalInput < 0))
-        {
-            verticalInput = 0;
-        }
-        if ((distanceToWallRight <= 0.6 && horizontalInput < 0) || (distanceToWallLeft <= 0.6 && horizontalInput > 0))
-        {
-            horizontalInput = 0;
-        }
-        */
     }
 
     private void FixedUpdate()
@@ -169,12 +139,12 @@ public class PlayerController : MonoBehaviour
         PlayerMove();
     }
     
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
-        // If the object colliding is tagged as Hazard, decrease health
+        // If the object colliding is tagged as Enemy, decrease health
         if (collision.gameObject.tag == "Enemy")
         {
-            // Checks if the player is not invincible so that health isn't remuved during iframes
+            // Checks if the player is not invincible so that health isn't removed during iframes
             if (!isInvincible)
             {
                 // Gets enemy damage variable from enemy and sets it to the local enemyDamage variable
@@ -183,16 +153,8 @@ public class PlayerController : MonoBehaviour
                 currentPlayerHealth -= enemyDamage;
                 StartCoroutine(IFrames());
             }
-
-        
-
-
-
-
-
         }
     }
-
 
     /// <summary>
     /// Sets up the colliders for health and other buff pick ups
@@ -213,29 +175,31 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(speedBoostTimer());
         }
 
+        // If item is double damage buff, start double damage coroutine
         if(other.gameObject.tag == "Damage Buff")
         {
             StartCoroutine(doubleDamageTimer()); 
         }
 
+        if (other.gameObject.tag == "Invulnerability")
+        {
+            isInvulnPowerUp = true; 
+            StartCoroutine(IFrames()); 
+        }
 
         //checks to see if the player is shot
         if (other.gameObject.tag == "Enemy Projectile")
         {
-            
-                // Checks if the player is not invincible so that health isn't remuved during iframes
-                if (!isInvincible)
-                {
-                    // Gets enemy damage variable from enemy and sets it to the local enemy damage variable
-                    enemyDamage = other.gameObject.GetComponent<EnemyProjectile>().damage;
-                    // Removes health and starts iframes
-                    currentPlayerHealth -= enemyDamage;
-                    StartCoroutine(IFrames());
-
-                }
-            
+            // Checks if the player is not invincible so that health isn't remuved during iframes
+            if (!isInvincible)
+            {
+                // Gets enemy damage variable from enemy projectile and sets it to the local enemy damage variable
+                enemyDamage = other.gameObject.GetComponent<EnemyProjectile>().damage;
+                // Removes health and starts iframes
+                currentPlayerHealth -= enemyDamage;
+                StartCoroutine(IFrames());
+            }
         }
-
     }
 
     /// <summary>
@@ -313,56 +277,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds the distance to the nearest wall and halts movement if touching it
-    /// </summary>
-    /*private void DistanceToWall()
-    {
-        RaycastHit hit;
-        Ray rightRay = new Ray(transform.position, transform.right);
-        Ray leftRay = new Ray(transform.position, -transform.right);
-        Ray frontRay = new Ray(transform.position, transform.forward);
-        Ray backRay = new Ray(transform.position, -transform.forward);
-
-        if (Physics.Raycast(rightRay, out hit) && hit.collider.tag == "Wall")
-        {
-            distanceToWallRight = hit.distance; 
-        }
-        else
-        {
-            distanceToWallRight = 3;
-        }
-        
-        if (Physics.Raycast(leftRay, out hit) && hit.collider.tag == "Wall")
-        {
-            distanceToWallLeft = hit.distance; 
-        }
-        else
-        {
-            distanceToWallLeft = 3;
-        }
-        
-        if (Physics.Raycast(frontRay, out hit) && hit.collider.tag == "Wall")
-        {
-            distanceToWallFront = hit.distance; 
-        }
-        else
-        {
-            distanceToWallFront = 3;
-        }
-        
-        if (Physics.Raycast(backRay, out hit) && hit.collider.tag == "Wall")
-        {
-            distanceToWallBack = hit.distance; 
-        }
-        else
-        {
-            distanceToWallBack = 3;
-        }
-
-    }
-    */
-
-    /// <summary>
     /// Spawns bullet
     /// </summary>
     public void SpawnProjectile()
@@ -390,18 +304,33 @@ public class PlayerController : MonoBehaviour
         
         // Spawn chosen projectile at gun position facing the same direction the camera is facing
         GameObject projectile = Instantiate(bulletToUse, gunPosition.position, cameraOrientation.rotation);
+        
+        // Assign this script to the projectile script reference in the bullet
         projectile.GetComponent<ProjectileScript>().playerController = this;
     }
 
-    // This is a coroutine, it is a timer. It makes the player invincible and invokes Blink repeating for iFramesTime number of seconds
+    // This is a coroutine, it is a timer. It makes the player invincible for iFramesTime number of seconds
     IEnumerator IFrames()
     {
+        // If iframes are from the power up, sets iframes time to the duration for the power up
+        if (isInvulnPowerUp == true)
+        {
+            iFramesTime = iFramesPowerUp;
+        }
+
+        // Else iframe time is the duration for being hit
+        else
+        {
+            iFramesTime = iFramesHit;
+        }
+
         // Set isInvincible to true so player can't take damage while coroutine is running
         isInvincible = true;
         // Sets a timer for iFramesTime number of seconds
         yield return new WaitForSeconds(iFramesTime);
         // Removes invincibility
         isInvincible = false;
+        isInvulnPowerUp = false;
     }
 
     // This coruoutine is a timer that sets a delay in between shotgun and pistol shots
@@ -418,36 +347,29 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator speedBoostTimer()
     {
-        // Set the player damage to take the value of projectile damage and multiply by 2
+        // Saves current move speed in normalSpeed variable
         normalSpeed = moveSpeed;
 
+        // Multiplies speed by amount set in inspector
         moveSpeed = moveSpeed * speedMultiplier;
 
-        // Sets a timer for doubleDamageTime number of seconds
+        // Sets a timer for speedTimer number of seconds
         yield return new WaitForSeconds(speedTimer);
 
         // Removes speed boost
         moveSpeed = normalSpeed; 
     }
 
-
-
     //sets up double damage timer
     IEnumerator doubleDamageTimer()
     {
-        // Set the player damage to take the value of projectile damage and multiply by 2
+        // Sets bool to be pulled by projectile script to true
         doubleDamage = true;
-        print("double damage in coroutine");
 
         // Sets a timer for doubleDamageTime number of seconds
         yield return new WaitForSeconds(doubleDamageTime);
 
-        
-       doubleDamage = false;
+        // Removes double damage
+        doubleDamage = false;
     }
-
-
-
-
-
 }

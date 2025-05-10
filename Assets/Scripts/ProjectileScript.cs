@@ -17,22 +17,20 @@ public class ProjectileScript : MonoBehaviour
     [HideInInspector]
     public PlayerController playerController; 
 
-    
-
     // Start is called before the first frame update
     void Start()
     {
         // Sets spawn position at the current position when spawning
         spawnPos = transform.position;
 
-        
+        // On spawn, checks if the player script has double damage power up active
         doubleDamageBullet = playerController.GetComponent<PlayerController>().doubleDamage;
+        
+        // If player controller has double damage active, double damage of bullet
         if (doubleDamageBullet == true)
         {
-            print("double damage");
             damage = (damage * 2);
         }
-
     }
 
     // Update is called once per frame
@@ -58,15 +56,10 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // If it is set as an enemy projectile, it doesn't destroy itself on contacting an enemy, and vice versa
-        // this is so the projectile doesn't destroy itself on spawning
-
-        
-            if (other.gameObject.tag != "Player")
-            {
-                Destroy(gameObject);
-            }
-        
-
+        // Bullet destroys itself when colliding with anything other than the player
+        if (other.gameObject.tag != "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 }

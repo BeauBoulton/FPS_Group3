@@ -118,12 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc69830beb1d05468242b1aaaba7971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPack: 0
   speedMultiplier: 0
   playerHealth: 0
-  isInvuln: 0
-  isHealth: 0
-  doubleDamage: 1
-  speedBoost: 0
-  iFramesTime: 5
-  doubleDamageTime: 5
+  destructibleItem: 1

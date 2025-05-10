@@ -5,7 +5,7 @@ using UnityEngine;
 
 /*
  * Name: Nick Sumek, Beau Boulton
- * Last updated: 5/6/25
+ * Last updated: 5/9/25
  * Description: Uses an array to handle items held in inventory
  */
 
@@ -35,6 +35,9 @@ public class InventoryScript : MonoBehaviour
             ItemScript newItem = other.gameObject.GetComponent<ItemScript>();
             if (AddItem(newItem))
             {
+                // If an item is added to inventory, don't destroy it on scene load
+                DontDestroyOnLoad(newItem);
+
                 // Finds which item was added most recently to inventory
                 ItemScript lastItem = FindLastItem();
 
@@ -60,7 +63,6 @@ public class InventoryScript : MonoBehaviour
             }
         }
     }
-
 
     // Update is called once per frame
     void Update()
@@ -136,7 +138,7 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds last item added to inventory. to be used to auto equip last weapon picked up
+    /// Finds last item added to inventory. To be used to auto equip last weapon when picked up
     /// </summary>
     /// <returns>Returns the last item added to inventory</returns>
     private ItemScript FindLastItem()
@@ -145,12 +147,14 @@ public class InventoryScript : MonoBehaviour
         int itemsInInventory = 0;
         for (int i = 0; i < arrayInventory.Length; i++)
         {
+            // Search inventory for items, if item is found, increase count
             if (arrayInventory[i] != null)
             {
                 itemsInInventory++;
             }
         }
 
+        // If there are items in inventory, find the last added item and return it
         if (itemsInInventory != 0)
         {
             lastItem = arrayInventory[itemsInInventory - 1];

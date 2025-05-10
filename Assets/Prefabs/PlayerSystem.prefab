@@ -367,7 +367,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447905453545899790}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1af115f38c10d384fa3f2217d2e12983, type: 3}
   m_Name: 
@@ -1682,7 +1682,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4999766216989714368}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1af115f38c10d384fa3f2217d2e12983, type: 3}
   m_Name: 
@@ -2196,6 +2196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5944705982083861109}
+  - component: {fileID: 297983328532910506}
   m_Layer: 0
   m_Name: PlayerSystem
   m_TagString: Untagged
@@ -2221,6 +2222,18 @@ Transform:
   - {fileID: 8089905597758264395}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &297983328532910506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5667225482335644169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c97ff21494ee94599c2fc305023def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5715812867838304369
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,7 +2843,11 @@ MonoBehaviour:
   doubleDamage: 0
   maxPlayerHealth: 100
   currentPlayerHealth: 100
-  iFramesTime: 5
+  isInvincible: 0
+  isInvulnPowerUp: 0
+  iFramesHit: 2
+  iFramesPowerUp: 20
+  iFramesTime: 2
   enemyDamage: 15
 --- !u!114 &7155350794317467355
 MonoBehaviour:
@@ -3337,7 +3354,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7497083637259209085}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1af115f38c10d384fa3f2217d2e12983, type: 3}
   m_Name: 

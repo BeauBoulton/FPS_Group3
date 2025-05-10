@@ -46,12 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc69830beb1d05468242b1aaaba7971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPack: 0
-  hasKeyCard: 0
-  movementBoost: 0
-  doubleDamage: 0
-  playerHealth: 0
-  iFramesTime: 5
+  speedMultiplier: 0
+  playerHealth: 15
+  destructibleItem: 1
 --- !u!65 &108721997531448459
 BoxCollider:
   m_ObjectHideFlags: 0
