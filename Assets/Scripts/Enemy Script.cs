@@ -13,15 +13,20 @@ public class EnemyScript : MonoBehaviour
 {
     public GameObject player; 
     public Transform playerPos;
+    
+    /*
     int MoveSpeed = 2;
     int MaxDist = 10;
     int MinDist = 5;
+    */
+
+    public float sightRange;
     public int enemyDamage;
     public int enemyHealth;
     public Transform enemyGunPosition;
     public GameObject bullet;
     public NavMeshAgent agent;
-    public float sightRange;
+    
 
     public float spawnDelay;
     public float timeBetweenShots;
