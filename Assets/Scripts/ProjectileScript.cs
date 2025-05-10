@@ -59,7 +59,10 @@ public class ProjectileScript : MonoBehaviour
         // Bullet destroys itself when colliding with anything other than the player
         if (other.gameObject.tag != "Player")
         {
-            Destroy(gameObject);
+            if (other.gameObject.tag != "Enemy Projectile")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

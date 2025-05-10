@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
-  speed: 10
+  speed: 12
   enemyScript: {fileID: 0}
 --- !u!54 &-1532930578250117935
 Rigidbody:

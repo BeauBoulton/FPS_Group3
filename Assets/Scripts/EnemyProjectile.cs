@@ -49,7 +49,10 @@ public class EnemyProjectile : MonoBehaviour
         // Bullet destroys itself if hitting anything other than an enemy
         if (other.gameObject.tag != "Enemy")
         {
-            Destroy(gameObject);
+            if (other.gameObject.tag != "Projectile")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
