@@ -165,7 +165,14 @@ public class PlayerController : MonoBehaviour
         // If item is health, get the health amount from the item
         if(other.gameObject.tag == "Health")
         {
-            currentPlayerHealth += other.gameObject.GetComponent<ItemScript>().playerHealth;
+            if (currentPlayerHealth < maxPlayerHealth)
+            {
+                currentPlayerHealth += other.gameObject.GetComponent<ItemScript>().playerHealth;
+                if (currentPlayerHealth > maxPlayerHealth)
+                {
+                    currentPlayerHealth = maxPlayerHealth;
+                }
+            }
         }
 
         // If item is speed boost, start speed boost coroutine
