@@ -1243,6 +1243,14 @@ PrefabInstance:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 237367615}
+    - target: {fileID: 8503531777796045937, guid: e2602143776d18d4aad0195d4b63b73a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -22.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 8503531777796045937, guid: e2602143776d18d4aad0195d4b63b73a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20.03
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
