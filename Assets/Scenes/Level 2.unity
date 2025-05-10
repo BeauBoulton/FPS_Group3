@@ -1990,6 +1990,10 @@ PrefabInstance:
       value: Portal
       objectReference: {fileID: 0}
     - target: {fileID: 5555184093577755836, guid: e2602143776d18d4aad0195d4b63b73a, type: 3}
+      propertyPath: sceneIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5555184093577755836, guid: e2602143776d18d4aad0195d4b63b73a, type: 3}
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 1089582707}
