@@ -39,6 +39,8 @@ public class EnemyScript : MonoBehaviour
         GameObject projectile = Instantiate(bullet, enemyGunPosition.position, transform.rotation);
         // Assign this script to the projectile script reference in the bullet
         projectile.GetComponent<EnemyProjectile>().enemyScript = this;
+
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
