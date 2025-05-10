@@ -12,35 +12,28 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
+    public int sceneIndex;
+    public GameObject spawnPoint;
     public void QuitGame()
     {
         Application.Quit();
 
     }
 
-    public void SwitchScene(int sceneIndex)
+    public void SwitchScene()
     {
         SceneManager.LoadScene(sceneIndex);
     }
 
-
-    /// <summary>
-    /// sets up the portal for loading different scenes
-    /// </summary>
-    public Vector3 teleportPoint;
-
-    public GameObject spawnPoint;
-
     private void Start()
     {
-        teleportPoint = spawnPoint.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //sets pos of touched obj to the teleport point
-        other.transform.position = teleportPoint;
-
+        other.transform.position = spawnPoint.transform.position;
+        SwitchScene();
     }
 
 
