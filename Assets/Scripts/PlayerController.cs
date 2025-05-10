@@ -141,6 +141,7 @@ public class PlayerController : MonoBehaviour
         if (currentPlayerHealth <= 0)
         {
             SceneManager.LoadScene(6);
+            Destroy(gameObject);
         }
 
     }
