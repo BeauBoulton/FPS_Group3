@@ -21,4 +21,5 @@ public class PortalScript : MonoBehaviour
             SceneManager.LoadScene(sceneIndex);
         }
     }
+
 }
