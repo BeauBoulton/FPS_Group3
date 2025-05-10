@@ -31,9 +31,12 @@ public class SceneManagerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //sets pos of touched obj to the teleport point
-        other.transform.position = spawnPoint.transform.position;
-        SwitchScene();
+        if (other.gameObject.tag == "Player")
+        {
+            //sets pos of touched obj to the teleport point
+            other.transform.position = spawnPoint.transform.position;
+            SwitchScene();
+        }
     }
 
 
