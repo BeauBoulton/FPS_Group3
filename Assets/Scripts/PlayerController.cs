@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
+using UnityEngine.SceneManagement;
 /*
  * Name: Beau Boulton, Nick Sumek
  * Last updated: 5/9/25
@@ -132,7 +134,21 @@ public class PlayerController : MonoBehaviour
                 machineGunIsFiring = false;
             }
         }
+
+        /// <summary>
+        /// if players health is zero or less, send them to game over screen
+        /// </summary>
+        if (currentPlayerHealth <= 0)
+        {
+            SceneManager.LoadScene(6);
+        }
+
     }
+
+
+
+
+    
 
     private void FixedUpdate()
     {
