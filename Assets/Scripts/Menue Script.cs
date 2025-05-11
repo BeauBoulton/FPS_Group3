@@ -12,32 +12,24 @@ using UnityEngine.SceneManagement;
 public class MenueScript : MonoBehaviour
 {
     public int sceneIndex;
+    
     //quits the app
     public void QuitGame()
     {
         Application.Quit();
-
     }
+    
     //sets up scene selection
     public void SwitchScene()
     {
         SceneManager.LoadScene(sceneIndex);
     }
 
-
-
-
-
-
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Shows and unlocks cursor in menues
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

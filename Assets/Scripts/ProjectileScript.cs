@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 /*
  * Name: Beau Boulton, Nick Sumek
- * Last updated: 5/6/25
+ * Last updated: 5/10/25
  * Description: handles movement and damage of projectile
  */
 
@@ -12,6 +12,8 @@ public class ProjectileScript : MonoBehaviour
     public int damage = 1; 
     public float speed = 10;
     Vector3 spawnPos;
+    
+    [HideInInspector]
     public bool doubleDamageBullet = false;
 
     [HideInInspector]
@@ -59,6 +61,7 @@ public class ProjectileScript : MonoBehaviour
         // Bullet destroys itself when colliding with anything other than the player
         if (other.gameObject.tag != "Player")
         {
+            // Also checks to not destroy itself when colliding with enemy bullets
             if (other.gameObject.tag != "Enemy Projectile")
             {
                 Destroy(gameObject);

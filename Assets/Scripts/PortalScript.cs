@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 /*
  * Name: Beau Boulton
  * Last updated: 5/9/25
- * Description: Handles scene transition when player collides with the end of level portal
+ * Description: Handles scene transition when player collides with the last end of level portal. 
+ * Unlike the other portals this one has no teleport point
  */
 
 public class PortalScript : MonoBehaviour
@@ -19,7 +20,9 @@ public class PortalScript : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             SceneManager.LoadScene(sceneIndex);
+            // Unlocks cursor and makes it visible for menu
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
-
 }

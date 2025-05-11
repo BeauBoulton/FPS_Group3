@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     bool readyToJump = true; 
 
     // To check if touching ground
-    bool grounded; 
+    bool grounded;
 
     // Orientation of orientation object and camera object
     public Transform orientation;
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     //modifies player movement
     public int speedTimer = 5;
+    [HideInInspector]
     public float normalSpeed;
     public float speedMultiplier;
     
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public GameObject shotgunBlast;
     private GameObject bulletToUse;
+    [HideInInspector]
     public int weaponSelect; 
     public Transform gunPosition;
     private bool canFire = true;
@@ -56,16 +58,23 @@ public class PlayerController : MonoBehaviour
 
     //damage modifiers
     public int doubleDamageTime = 5;
+    [HideInInspector]
     public bool doubleDamage = false;
    
     // Health variables
     public int maxPlayerHealth = 100;
+    [HideInInspector]
     public int currentPlayerHealth = 100;
+    [HideInInspector]
     public bool isInvincible = false;
+    [HideInInspector]
     public bool isInvulnPowerUp = false; 
+    //I frames time if player is hit
     public int iFramesHit;
+    //I frames time if player gets invuln power up
     public int iFramesPowerUp; 
     public int iFramesTime;
+    [HideInInspector]
     public int enemyDamage = 15;
 
     // Start is called before the first frame update
@@ -134,22 +143,7 @@ public class PlayerController : MonoBehaviour
                 machineGunIsFiring = false;
             }
         }
-
-        /// <summary>
-        /// if players health is zero or less, send them to game over screen
-        /// </summary>
-        if (currentPlayerHealth <= 0)
-        {
-            SceneManager.LoadScene(6);
-            Destroy(gameObject);
-        }
-
     }
-
-
-
-
-    
 
     private void FixedUpdate()
     {
@@ -166,25 +160,34 @@ public class PlayerController : MonoBehaviour
             {
                 // Gets enemy damage variable from enemy and sets it to the local enemyDamage variable
                  enemyDamage = collision.gameObject.GetComponent<EnemyScript>().enemyDamage;
-                // Removes health and starts iframes
+                // Removes health
                 currentPlayerHealth -= enemyDamage;
-                StartCoroutine(IFrames());
+
+                // Loads game over screen if health hits, else starts i frames
+                if (currentPlayerHealth <= 0)
+                {
+                    SceneManager.LoadScene(6);
+                }
+                else
+                {
+                    StartCoroutine(IFrames());
+                }
+
             }
         }
     }
-
-    /// <summary>
-    /// Sets up the colliders for health and other buff pick ups
-    /// </summary>
 
     private void OnTriggerEnter(Collider other)
     {
         // If item is health, get the health amount from the item
         if(other.gameObject.tag == "Health")
         {
+            // Only increase health if current hp is lower than max hp
             if (currentPlayerHealth < maxPlayerHealth)
             {
                 currentPlayerHealth += other.gameObject.GetComponent<ItemScript>().playerHealth;
+                
+                // If current hp is higher than max hp, reset it to max hp
                 if (currentPlayerHealth > maxPlayerHealth)
                 {
                     currentPlayerHealth = maxPlayerHealth;
@@ -195,16 +198,18 @@ public class PlayerController : MonoBehaviour
         // If item is speed boost, start speed boost coroutine
         if(other.gameObject.tag == "Move")
         {
+            // Get speed boost multiplier from item script
             speedMultiplier = other.GetComponent<ItemScript>().speedMultiplier; 
-            StartCoroutine(speedBoostTimer());
+            StartCoroutine(SpeedBoostTimer());
         }
 
         // If item is double damage buff, start double damage coroutine
         if(other.gameObject.tag == "Damage Buff")
         {
-            StartCoroutine(doubleDamageTimer()); 
+            StartCoroutine(DoubleDamageTimer()); 
         }
 
+        // If item is invuln, start i frames
         if (other.gameObject.tag == "Invulnerability")
         {
             isInvulnPowerUp = true; 
@@ -219,9 +224,18 @@ public class PlayerController : MonoBehaviour
             {
                 // Gets enemy damage variable from enemy projectile and sets it to the local enemy damage variable
                 enemyDamage = other.gameObject.GetComponent<EnemyProjectile>().damage;
-                // Removes health and starts iframes
+                // Removes health
                 currentPlayerHealth -= enemyDamage;
-                StartCoroutine(IFrames());
+
+                // Loads game over screen if health hits, else starts i frames
+                if (currentPlayerHealth <= 0)
+                {
+                    SceneManager.LoadScene(6);
+                }
+                else
+                {
+                    StartCoroutine(IFrames());
+                }
             }
         }
     }
@@ -333,7 +347,10 @@ public class PlayerController : MonoBehaviour
         projectile.GetComponent<ProjectileScript>().playerController = this;
     }
 
-    // This is a coroutine, it is a timer. It makes the player invincible for iFramesTime number of seconds
+    /// <summary>
+    /// This is a coroutine, it is a timer. It makes the player invincible for iFramesTime number of seconds
+    /// </summary>
+    /// <returns></returns>
     IEnumerator IFrames()
     {
         // If iframes are from the power up, sets iframes time to the duration for the power up
@@ -357,7 +374,10 @@ public class PlayerController : MonoBehaviour
         isInvulnPowerUp = false;
     }
 
-    // This coruoutine is a timer that sets a delay in between shotgun and pistol shots
+    /// <summary>
+    /// This coruoutine is a timer that sets a delay in between shotgun and pistol shots
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ShotDelay()
     {
         canFire = false;
@@ -369,7 +389,7 @@ public class PlayerController : MonoBehaviour
     /// Sets up the speed boost function/ timer
     /// </summary>
     /// <returns></returns>
-    IEnumerator speedBoostTimer()
+    IEnumerator SpeedBoostTimer()
     {
         // Saves current move speed in normalSpeed variable
         normalSpeed = moveSpeed;
@@ -384,8 +404,11 @@ public class PlayerController : MonoBehaviour
         moveSpeed = normalSpeed; 
     }
 
-    //sets up double damage timer
-    IEnumerator doubleDamageTimer()
+    /// <summary>
+    /// sets up double damage timer
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator DoubleDamageTimer()
     {
         // Sets bool to be pulled by projectile script to true
         doubleDamage = true;

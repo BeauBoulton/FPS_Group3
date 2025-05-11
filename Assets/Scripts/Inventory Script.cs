@@ -12,7 +12,9 @@ using UnityEngine;
 public class InventoryScript : MonoBehaviour
 {
     //sets up arrayInventory
+    [HideInInspector]
     public ItemScript[] arrayInventory;
+    
     public int invetorySize = 6;
 
     // Handles which weapon is currently selected 0 = pistol and is default, 1 = shotgun, 2 = machine gun

@@ -2823,9 +2823,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d78a04a03c05f7458275a81b99f2145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 8
   groundDrag: 5
-  jumpForce: 12
+  jumpForce: 14
   jumpCooldown: 0.25
   airMultiplier: 0.4
   orientation: {fileID: 4053121735199930804}
@@ -2839,7 +2839,7 @@ MonoBehaviour:
   gunPosition: {fileID: 444886995240798249}
   pistolCoolDown: 0.25
   shotgunCoolDown: 0.85
-  doubleDamageTime: 5
+  doubleDamageTime: 20
   doubleDamage: 0
   maxPlayerHealth: 100
   currentPlayerHealth: 100

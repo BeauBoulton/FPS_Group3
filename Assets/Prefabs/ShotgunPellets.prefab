@@ -744,7 +744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  speed: 16
+  speed: 20
   doubleDamageBullet: 0
   playerController: {fileID: 0}
 --- !u!54 &-8722010587609350

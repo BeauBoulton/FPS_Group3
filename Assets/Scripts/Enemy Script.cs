@@ -13,12 +13,6 @@ public class EnemyScript : MonoBehaviour
 {
     public GameObject player; 
     public Transform playerPos;
-    
-    /*
-    int MoveSpeed = 2;
-    int MaxDist = 10;
-    int MinDist = 5;
-    */
 
     public float sightRange;
     public int enemyDamage;
@@ -33,36 +27,45 @@ public class EnemyScript : MonoBehaviour
    
     void Start()
     {
+        // On spawn, finds player and assigns it to local variable
         player = GameObject.Find("Player");
         playerPos = player.transform; 
+        
+        // Starts spawning projectiles
         InvokeRepeating("SpawnProjectile", spawnDelay, timeBetweenShots); 
     }
 
-    //spawns enemy projectile
+    /// <summary>
+    /// spawns enemy projectile
+    /// </summary>
     public void SpawnProjectile()
     {
         GameObject projectile = Instantiate(bullet, enemyGunPosition.position, transform.rotation);
-        // Assign this script to the projectile script reference in the bullet
+        // Assign this script to the enemy script reference in the bullet
         projectile.GetComponent<EnemyProjectile>().enemyScript = this;
 
+        // Assign the agent to the nav mesh agent on this object
         agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
+        // Destroy self if health reaches 0
         if (enemyHealth <= 0)
         {
             Destroy (gameObject);
         }
 
+        // Set the player's position as the destination for the nav mesh agent
         agent.SetDestination(playerPos.transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        // If hitting a projectile
         if (other.gameObject.tag == "Projectile")
-
         {
+            // Get damage from projectile script and lose that amount of health
             enemyHealth -= other.GetComponent<ProjectileScript>().damage;
         }
     }

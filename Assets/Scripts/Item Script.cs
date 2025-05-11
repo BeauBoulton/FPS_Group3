@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class ItemScript : MonoBehaviour
 {
-    //declares item pick ups
+    // Set the speed multiplier for speed boost or amount healed for health
     public float speedMultiplier;
     public int playerHealth;
 
