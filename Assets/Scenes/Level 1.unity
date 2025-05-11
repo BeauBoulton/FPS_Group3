@@ -1970,10 +1970,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1912317409852728541, guid: ad3911418dfbcbe4e8c09a6707eff174, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5667225482335644169, guid: ad3911418dfbcbe4e8c09a6707eff174, type: 3}
       propertyPath: m_Name
       value: PlayerSystem
